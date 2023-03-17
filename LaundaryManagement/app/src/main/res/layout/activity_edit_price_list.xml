@@ -16,7 +16,7 @@
         android:fontFamily="sans-serif-black"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
-        android:text="@string/add_particular"
+        android:text="@string/edit_particular"
         android:textColor="@color/black"
         android:textSize="50sp"
         android:textStyle="bold"

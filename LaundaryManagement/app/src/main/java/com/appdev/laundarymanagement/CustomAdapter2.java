@@ -66,5 +66,4 @@ public class CustomAdapter2 extends ArrayAdapter<pricelistclass>{
 
             return convertView;
         }
-
 }

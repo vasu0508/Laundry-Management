@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -47,8 +48,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class add_in_price_list_Activity extends AppCompatActivity {
     EditText particular,unit,rate;
     Button submit,back;
+    ProgressBar pb;
     String p,u,r;
-    double r1;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,20 +62,26 @@ public class add_in_price_list_Activity extends AppCompatActivity {
         rate=findViewById(R.id.rateet);
         submit=findViewById(R.id.submit);
         back=findViewById(R.id.back);
+        pb=findViewById(R.id.pbar);
+        pb.setVisibility(View.INVISIBLE);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pb.setVisibility(View.VISIBLE);
                 p=particular.getText().toString();
                 u=unit.getText().toString();
                 r=rate.getText().toString();
                 if(p.isEmpty()){
+                    pb.setVisibility(View.INVISIBLE);
                     particular.setError("This field cannot be Empty");
                 }
                 else if(u.isEmpty()){
+                    pb.setVisibility(View.INVISIBLE);
                     unit.setError("This field cannot be Empty");
                     particular.setError(null);
                 }
                 else if(r.isEmpty()){
+                    pb.setVisibility(View.INVISIBLE);
                     rate.setError("This field cannot be Empty");
                     unit.setError(null);
                     particular.setError(null);

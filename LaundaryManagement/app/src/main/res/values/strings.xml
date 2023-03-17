@@ -15,4 +15,24 @@
     <string name="add_particular">Add Particular</string>
     <string name="submit">Submit</string>
     <string name="back">Back</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="edit_particular">Edit Particular</string>
+    <string name="sharedpref">Sharedp</string>
+    <string name="search_user">Search User</string>
+    <string name="view_profile">View Profile</string>
+    <string name="add_laundry">Add Laundry</string>
+    <string name="name">Name:</string>
+    <string name="vasu_choudhary">Vasu Choudhary</string>
+    <string name="_3rd">3rd</string>
+    <string name="_900">900</string>
+    <string name="btech">BTech</string>
+    <string name="_2143533">2143533</string>
+    <string name="_320">320</string>
+    <string name="room_no">Room No:</string>
+    <string name="card_no">Card No:</string>
+    <string name="balance">Balance(in Rs):</string>
+    <string name="branch">Branch:</string>
+    <string name="year">Year:</string>
+    <string name="calculate">Calculate</string>
 </resources>
