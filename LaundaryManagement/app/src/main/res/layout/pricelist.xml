@@ -38,11 +38,10 @@
 
         <ImageButton
             android:id="@+id/add"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@null"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_add_white"
             android:contentDescription="@string/add"
-            android:src="@drawable/ic_add_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/textView"
             app:layout_constraintHorizontal_bias="0.955"
@@ -68,11 +67,12 @@
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/refresh2"
                 android:layout_width="match_parent"
-                android:layout_marginTop="30dp"
                 android:layout_height="match_parent">
 
                 <ListView
                     android:id="@+id/list"
+                    android:layout_marginTop="30dp"
+                    android:divider="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
