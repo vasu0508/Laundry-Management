@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Laundry Management</string>
     <string name="title_home">Home</string>
-    <string name="title_searchuser">Search User</string>
+    <string name="title_searchuser">User</string>
     <string name="title_laundaryreceived">Received</string>
     <string name="title_pricelist">Price List</string>
     <string name="title_settings">Settings</string>
@@ -19,7 +19,7 @@
     <string name="delete">Delete</string>
     <string name="edit_particular">Edit Particular</string>
     <string name="sharedpref">Sharedp</string>
-    <string name="search_user">Search User</string>
+    <string name="search_user">User</string>
     <string name="view_profile">View Profile</string>
     <string name="add_laundry">Add Laundry</string>
     <string name="name">Name:</string>
