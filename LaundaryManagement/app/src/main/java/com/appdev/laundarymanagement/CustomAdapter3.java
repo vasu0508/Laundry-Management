@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -93,6 +94,9 @@ public class CustomAdapter3 extends ArrayAdapter<pricelistclass>{
                 if(!hasFocus) {
                     final int position = v.getId();
                     final EditText Caption = (EditText) v;
+                    if(Caption.getText().toString().equals("")){
+                        Caption.setText("0");
+                    }
                     data.set(position, Caption.getText().toString());
                     etcurr = (EditText) v;
                     holder.totalprice.setText(priceList.getTotalprice());
@@ -101,6 +105,9 @@ public class CustomAdapter3 extends ArrayAdapter<pricelistclass>{
                     final int position = v.getId();
                     final EditText Caption = (EditText) v;
                     data.set(position, Caption.getText().toString());
+                    if(holder.quantity.getText().toString().equals("0")) {
+                        holder.quantity.setText("");
+                    }
                     etcurr = (EditText) v;
                 }
             }

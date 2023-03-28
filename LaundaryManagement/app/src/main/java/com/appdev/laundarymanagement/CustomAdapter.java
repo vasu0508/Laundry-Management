@@ -30,9 +30,10 @@ public class CustomAdapter extends ArrayAdapter<newClass> {
     public View getView(int position, View convertView, ViewGroup parent) {
         String title = getItem(position).gettitle();
         String Value = getItem(position).getValue();
+        String CardNo=getItem(position).getCardNo();
 
         //Create the person object with the information
-        newClass Newclass = new newClass(title,Value);
+        newClass Newclass = new newClass(title,Value,CardNo);
 
         //create the view result for showing the animation
         final View result;

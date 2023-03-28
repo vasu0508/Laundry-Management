@@ -3,12 +3,19 @@
     <item>
         <shape>
             <gradient tools:ignore="ExtraText"
-                android:startColor = "#26428b"
-                android:centerColor = "#6171c1"
-                android:endColor = "#98a5fa"
+                android:startColor = "#000117"
+                android:centerColor = "#000044"
+                android:endColor = "#002275"
                 android:angle = "0"
-            />
+                />
         </shape>
     </item>
 
 </selector>
+
+<!--<gradient tools:ignore="ExtraText"-->
+<!--android:startColor = "#26428b"-->
+<!--android:centerColor = "#6171c1"-->
+<!--android:endColor = "#98a5fa"-->
+<!--android:angle = "0"-->
+<!--    />-->

@@ -27,6 +27,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.AppendValuesResponse;
+import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
@@ -54,6 +55,10 @@ public class AddLaundryActivity extends AppCompatActivity {
     CustomAdapter3 customAdapter2;
     Double totalcost,totalclothes;
     List<List<Object>> values1;
+    String name,roomno,balance,cardno;
+    SharedPreferences sharedPreferences;
+    String posit;
+    Integer position=-1;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +75,8 @@ public class AddLaundryActivity extends AppCompatActivity {
         tvcardno=findViewById(R.id.textView13);
         tvbalance=findViewById(R.id.textView18);
         readDataFromGoogleSheet();
-        String name,roomno,balance,cardno;
-        SharedPreferences sharedPreferences=getSharedPreferences(getResources().getString(R.string.sharedpref),MODE_PRIVATE);
+        readDataFromGoogleSheet2();
+        sharedPreferences=getSharedPreferences(getResources().getString(R.string.sharedpref),MODE_PRIVATE);
         name=sharedPreferences.getString("name",null);
         roomno=sharedPreferences.getString("roomno",null);
         balance=sharedPreferences.getString("balance",null);
@@ -134,11 +139,12 @@ public class AddLaundryActivity extends AppCompatActivity {
                 if(Double.parseDouble(totalcost.toString()) <= Double.parseDouble(balance.toString())) {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                     String currentDateandTime = sdf.format(new Date());
-                    SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+                    SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm", Locale.getDefault());
                     String currentTime = sdf2.format(new Date());
                     createSheetsService();
                     ValueRange body = new ValueRange();
                     ArrayList<Object> ar = new ArrayList<>();
+                    ar.add(sharedPreferences.getString("admin_institute_code",null));
                     ar.add(currentDateandTime);
                     ar.add(currentTime);
                     ar.add("Received");
@@ -158,8 +164,12 @@ public class AddLaundryActivity extends AppCompatActivity {
                     values1.add(ll);
                     body.setValues(values1);
                     appendDataToSheet(body);
-                    Intent intent=new Intent(AddLaundryActivity.this,SearchUserActivity.class);
-                    startActivity(intent);
+                    Double updatedbal=(Double.parseDouble(balance)-totalcost);
+                    ValueRange body1 = new ValueRange()
+                            .setValues(Arrays.asList(
+                                    Arrays.asList("FALSE",updatedbal.toString())
+                            ));
+                    editDataToSheet(body1);
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     finish();
                 }
@@ -296,5 +306,54 @@ public class AddLaundryActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    private void editDataToSheet(ValueRange body1) {
+        Integer pos=position;
+        pos=pos+1;
+        posit=pos.toString();
+        String RANGE = "Sheet1!R"+posit+":"+"S"+posit;
+        try {
+            UpdateValuesResponse result1 = sheetsService.spreadsheets().values()
+                    .update(SPREADSHEET_ID, RANGE, body1)
+                    .setValueInputOption("USER_ENTERED")
+                    .execute();
+            Log.d(TAG, "Edit result: " + result1);
+            Toast.makeText(this, "Data Edited Successfully", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(this, "Unable to send data", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+    private void readDataFromGoogleSheet2() {
+        String spreadsheetId = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
+        String range = "Sheet1!K:T";
+        String apiKey = "AIzaSyAtB0JJF5JEcr3gCW6W_wz2AHgtBYhGBmk";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://sheets.googleapis.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
+        SheetsService sheetsService = retrofit.create(SheetsService.class);
+
+        Call<ValueRange> call = sheetsService.getValues(spreadsheetId, range, apiKey);
+        call.enqueue(new Callback<ValueRange>() {
+            @Override
+            public void onResponse(@NonNull Call<ValueRange> call, @NonNull Response<ValueRange> response) {
+                //try {
+                System.out.println(response.toString());
+                ValueRange values = response.body();
+                List<List<Object>> rows = values.getValues();
+                for(Integer i=0;i<rows.size();i++){
+                    if(cardno.equals(rows.get(i).get(2).toString()) && sharedPreferences.getString("admin_institute_code",null).equals(rows.get(i).get(9))){
+                        position=i;
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ValueRange> call, @NonNull Throwable t) {
+                Toast.makeText(AddLaundryActivity.this, "Unable to fetch data", Toast.LENGTH_SHORT).show();
+                // Handle error
+            }
+        });
+
+    }
 }

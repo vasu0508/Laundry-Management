@@ -14,6 +14,8 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -45,6 +47,8 @@ public class SearchUserActivity extends AppCompatActivity {
     ArrayList<newClass> a= new ArrayList<>();
     SharedPreferences sharedPreferences;
     Boolean issearch=false;
+    ArrayList<newClass> b;
+    ImageButton adduser;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +61,16 @@ public class SearchUserActivity extends AppCompatActivity {
         sv=findViewById(R.id.search);
         ll=findViewById(R.id.homepage);
         pb=findViewById(R.id.progressbar);
+        adduser=findViewById(R.id.adduser);
         bv.getMenu().findItem(R.id.navigation_searchuser).setChecked(true);
+        adduser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(SearchUserActivity.this,AddUserActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
         swipeRefreshLayout= (SwipeRefreshLayout)findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
@@ -122,56 +135,62 @@ public class SearchUserActivity extends AppCompatActivity {
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                ArrayList<newClass> b = new ArrayList<>();
+                b = new ArrayList<>();
                 if (query.length() == 0) {
-                    issearch=false;
                     b.addAll(a);
                     CustomAdapter customAdapter2 = new CustomAdapter(SearchUserActivity.this, R.layout.searchuser_listview, b);
                     ls.setAdapter(customAdapter2);
+                    issearch=false;
                 } else {
                     issearch=true;
+                    b = new ArrayList<>();
                     for (newClass wp : a) {
-                        if (wp.gettitle().toLowerCase(Locale.getDefault()).contains(query) || wp.getValue().toLowerCase(Locale.getDefault()).contains(query)) {
+                        if (wp.gettitle().toLowerCase(Locale.getDefault()).contains(query.toLowerCase()) || wp.getValue().toLowerCase(Locale.getDefault()).contains(query.toLowerCase())) {
                             b.add(wp);
                         }
                     }
+                }
+                if(!b.isEmpty()) {
                     if(b.get(0).gettitle().equals("Room No")){
                         issearch=false;
                     }
-                }
-                if(!b.isEmpty()) {
                     CustomAdapter customAdapter2 = new CustomAdapter(SearchUserActivity.this, R.layout.searchuser_listview, b);
                     ls.setAdapter(customAdapter2);
                 }
                 else{
+                    b.add(new newClass("No Match","",""));
+                    CustomAdapter customAdapter2 = new CustomAdapter(SearchUserActivity.this, R.layout.searchuser_listview, b);
+                    ls.setAdapter(customAdapter2);
                     Toast.makeText(SearchUserActivity.this, "No match found", Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<newClass> b = new ArrayList<>();
+                b = new ArrayList<>();
                 if(newText.length() == 0){
+                    b.addAll(a);
+                    CustomAdapter customAdapter2 = new CustomAdapter(SearchUserActivity.this, R.layout.searchuser_listview, b);
+                    ls.setAdapter(customAdapter2);
                     issearch=false;
-                    ls.setAdapter(customAdapter);
                 }
                 else {
                     issearch=true;
+                    b = new ArrayList<>();
                     for (newClass wp : a) {
-                        if (wp.gettitle().toLowerCase(Locale.getDefault()).contains(newText) || wp.getValue().toLowerCase(Locale.getDefault()).contains(newText)) {
+                        if (wp.gettitle().toLowerCase(Locale.getDefault()).contains(newText.toLowerCase()) || wp.getValue().toLowerCase(Locale.getDefault()).contains(newText.toLowerCase())) {
                             b.add(wp);
-                        }
-                    }
-                    if(!b.isEmpty()) {
-                        if (b.get(0).gettitle().equals("Room No")) {
-                            issearch = false;
                         }
                     }
                     if (!b.isEmpty()) {
                         CustomAdapter customAdapter2 = new CustomAdapter(SearchUserActivity.this, R.layout.searchuser_listview, b);
                         ls.setAdapter(customAdapter2);
+                        if(b.get(0).gettitle().equals("Room No")){
+                            issearch=false;
+                        }
                     } else {
+                        b.add(new newClass("No Match","",""));
+                        issearch=false;
                         CustomAdapter customAdapter2 = new CustomAdapter(SearchUserActivity.this, R.layout.searchuser_listview, b);
                         ls.setAdapter(customAdapter2);
                     }
@@ -211,11 +230,24 @@ public class SearchUserActivity extends AppCompatActivity {
                 startActivity(intent3);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
+                break;
+            case R.id.navigation_received:
+                Intent intent4 = new Intent(SearchUserActivity.this, ReceivedActivity.class);
+                startActivity(intent4);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+                break;
+            case R.id.navigation_settings:
+                Intent intent5 = new Intent(SearchUserActivity.this, Feedback.class);
+                startActivity(intent5);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+                break;
         }
     }
     private void readDataFromGoogleSheet() {
         String spreadsheetId = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
-        String range = "Sheet1!A:I";
+        String range = "Sheet1!A:J";
         String apiKey = "AIzaSyAtB0JJF5JEcr3gCW6W_wz2AHgtBYhGBmk";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://sheets.googleapis.com/")
@@ -232,10 +264,13 @@ public class SearchUserActivity extends AppCompatActivity {
                 System.out.println(response.toString());
                 ValueRange values = response.body();
                 List<List<Object>> rows = values.getValues();
-                a.add(new newClass(rows.get(0).get(1).toString(),rows.get(0).get(0).toString()));
+                a.add(new newClass(rows.get(0).get(1).toString(),rows.get(0).get(0).toString(),rows.get(0).get(2).toString()));
                 for(int i=1;i<rows.size();i++){
-                    a.add(new newClass(rows.get(i).get(1).toString(), rows.get(i).get(0).toString()));
+                    if(rows.get(i).get(9).toString().equals(sharedPreferences.getString("admin_institute_code",null))) {
+                        a.add(new newClass(rows.get(i).get(1).toString(), rows.get(i).get(0).toString(), rows.get(i).get(2).toString()));
+                    }
                 }
+                b=a;
                 dd=rows;
                 CustomAdapter customAdapter=new CustomAdapter(SearchUserActivity.this,R.layout.searchuser_listview,a);
                 pb.setVisibility(View.GONE);
@@ -244,7 +279,7 @@ public class SearchUserActivity extends AppCompatActivity {
                 if(a.size()==1){
                     ArrayList<newClass> d;
                     d=new ArrayList<newClass>();
-                    d.add(new newClass("No Requests",""));
+                    d.add(new newClass("No Requests","",""));
                     CustomAdapter customAdapter2=new CustomAdapter(SearchUserActivity.this,R.layout.searchuser_listview,d);
                     ls.setAdapter(customAdapter2);
                 }
@@ -277,16 +312,17 @@ public class SearchUserActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.add_laundry) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            int position = info.position;
+            Integer position = info.position;
             System.out.println(a.get(position).gettitle());
             for(int i=0;i<dd.size();i++){
-                if(a.get(position).getValue().equals(dd.get(i).get(0))){
+                if(b.get(position).getCardNo().equals(dd.get(i).get(2))){
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("name", dd.get(i).get(0).toString());
                     editor.putString("roomno", dd.get(i).get(1).toString());
                     editor.putString("cardno", dd.get(i).get(2).toString());
                     editor.putString("balance", dd.get(i).get(8).toString());
-                    editor.commit();
+                    editor.putString("institute_code", dd.get(i).get(9).toString());
+                    editor.apply();
                 }
             }
 
@@ -297,7 +333,21 @@ public class SearchUserActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.edit_profile) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             Integer position = info.position;
-            Intent intent = new Intent(SearchUserActivity.this, edit_price_list.class);
+            for(int i=0;i<dd.size();i++){
+                if(b.get(position).getCardNo().equals(dd.get(i).get(2))){
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("name", dd.get(i).get(0).toString());
+                    editor.putString("roomno", dd.get(i).get(1).toString());
+                    editor.putString("cardno", dd.get(i).get(2).toString());
+                    editor.putString("balance", dd.get(i).get(8).toString());
+                    editor.putString("program", dd.get(i).get(3).toString());
+                    editor.putString("year", dd.get(i).get(4).toString());
+                    editor.putString("email", dd.get(i).get(5).toString());
+                    editor.putString("institute_code", dd.get(i).get(9).toString());
+                    editor.apply();
+                }
+            }
+            Intent intent = new Intent(SearchUserActivity.this, EditUserActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;

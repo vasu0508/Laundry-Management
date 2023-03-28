@@ -43,11 +43,14 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     Boolean issearch=false;
     ArrayList<newClass> a= new ArrayList<>();
+    ArrayList<newClass> b;
     @SuppressLint({"MissingInflatedId", "RestrictedApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+//        startActivity(intent);
         ls=findViewById(R.id.list);
         tv1=findViewById(R.id.textView);
         bv=findViewById(R.id.bottom_nav);
@@ -121,29 +124,32 @@ public class MainActivity extends AppCompatActivity {
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                ArrayList<newClass> b = new ArrayList<>();
+                b = new ArrayList<>();
                 if (query.length() == 0) {
                     b.addAll(a);
                     CustomAdapter customAdapter2 = new CustomAdapter(MainActivity.this, R.layout.listview_request, b);
                     ls.setAdapter(customAdapter2);
                     issearch=false;
                 } else {
+                    issearch=true;
+                    b = new ArrayList<>();
                     for (newClass wp : a) {
-                        if (wp.gettitle().toLowerCase(Locale.getDefault()).contains(query) || wp.getValue().toLowerCase(Locale.getDefault()).contains(query)) {
+                        if (wp.gettitle().toLowerCase(Locale.getDefault()).contains(query.toLowerCase()) || wp.getValue().toLowerCase(Locale.getDefault()).contains(query.toLowerCase())) {
                             b.add(wp);
                         }
                     }
-                    issearch=true;
+                }
+                if(!b.isEmpty()) {
                     if(b.get(0).gettitle().equals("Room No")){
                         issearch=false;
                     }
-
-                }
-                if(!b.isEmpty()) {
                     CustomAdapter customAdapter2 = new CustomAdapter(MainActivity.this, R.layout.listview_request, b);
                     ls.setAdapter(customAdapter2);
                 }
                 else{
+                    b.add(new newClass("No Match","",""));
+                    CustomAdapter customAdapter2 = new CustomAdapter(MainActivity.this, R.layout.listview_request, b);
+                    ls.setAdapter(customAdapter2);
                     Toast.makeText(MainActivity.this, "No match found", Toast.LENGTH_SHORT).show();
                 }
                 return false;
@@ -151,27 +157,32 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                ArrayList<newClass> b = new ArrayList<>();
+                b = new ArrayList<>();
                 if(newText.length() == 0){
-                    ls.setAdapter(customAdapter);
+                    b.addAll(a);
+                    CustomAdapter customAdapter2 = new CustomAdapter(MainActivity.this, R.layout.listview_request, b);
+                    ls.setAdapter(customAdapter2);
                     issearch=false;
                 }
                 else {
                     issearch=true;
+                    b = new ArrayList<>();
                     for (newClass wp : a) {
-                        if (wp.gettitle().toLowerCase(Locale.getDefault()).contains(newText) || wp.getValue().toLowerCase(Locale.getDefault()).contains(newText)) {
+                        if (wp.gettitle().toLowerCase(Locale.getDefault()).contains(newText.toLowerCase()) || wp.getValue().toLowerCase(Locale.getDefault()).contains(newText.toLowerCase())) {
                             b.add(wp);
                         }
                     }
                     if (!b.isEmpty()) {
                         CustomAdapter customAdapter2 = new CustomAdapter(MainActivity.this, R.layout.listview_request, b);
                         ls.setAdapter(customAdapter2);
+                        if(b.get(0).gettitle().equals("Room No")){
+                            issearch=false;
+                        }
                     } else {
+                        b.add(new newClass("No Match","",""));
+                        issearch=false;
                         CustomAdapter customAdapter2 = new CustomAdapter(MainActivity.this, R.layout.listview_request, b);
                         ls.setAdapter(customAdapter2);
-                    }
-                    if(b.get(0).gettitle().equals("Room No")){
-                        issearch=false;
                     }
                 }
                 return false;
@@ -212,11 +223,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent3);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
+                break;
+            case R.id.navigation_received:
+                Intent intent4 = new Intent(MainActivity.this, ReceivedActivity.class);
+                startActivity(intent4);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+                break;
+            case R.id.navigation_settings:
+                Intent intent5 = new Intent(MainActivity.this, Feedback.class);
+                startActivity(intent5);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+                break;
         }
+
+
     }
     private void readDataFromGoogleSheet() {
         String spreadsheetId = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
-        String range = "Sheet1!A:I";
+        String range = "Sheet1!A:J";
         String apiKey = "AIzaSyAtB0JJF5JEcr3gCW6W_wz2AHgtBYhGBmk";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://sheets.googleapis.com/")
@@ -233,21 +259,22 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println(response.toString());
                     ValueRange values = response.body();
                     List<List<Object>> rows = values.getValues();
-                a.add(new newClass(rows.get(0).get(1).toString(),rows.get(0).get(0).toString()));
+                a.add(new newClass(rows.get(0).get(1).toString(),rows.get(0).get(0).toString(),rows.get(0).get(2).toString()));
                     for(int i=1;i<rows.size();i++){
-                        if(rows.get(i).get(7).toString().equals("TRUE")) {
-                            a.add(new newClass(rows.get(i).get(1).toString(), rows.get(i).get(0).toString()));
+                        if(rows.get(i).get(7).toString().equals("TRUE")  && rows.get(i).get(9).toString().equals(sharedPreferences.getString("admin_institute_code",null))) {
+                            a.add(new newClass(rows.get(i).get(1).toString(), rows.get(i).get(0).toString(),rows.get(i).get(2).toString()));
                         }
                     }
+                    b=a;
                 dd=rows;
                 CustomAdapter customAdapter=new CustomAdapter(MainActivity.this,R.layout.listview_request,a);
                 pb.setVisibility(View.GONE);
                 ls.setAdapter(customAdapter);
                 System.out.println(a.size()==1);
-                if(a.size()==1){
+                if(a.size()==0){
                     ArrayList<newClass> d;
                     d=new ArrayList<newClass>();
-                    d.add(new newClass("No Requests",""));
+                    d.add(new newClass("No Requests","",""));
                     CustomAdapter customAdapter2=new CustomAdapter(MainActivity.this,R.layout.listview_request,d);
                     ls.setAdapter(customAdapter2);
                 }
@@ -292,15 +319,16 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.add_laundry) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int position = info.position;
-            System.out.println(a.get(position).gettitle());
+            System.out.println(b.get(position).getCardNo());
             for(int i=0;i<dd.size();i++){
-                if(a.get(position).getValue().equals(dd.get(i).get(0))){
+                if(b.get(position).getCardNo().equals(dd.get(i).get(2))){
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("name", dd.get(i).get(0).toString());
                     editor.putString("roomno", dd.get(i).get(1).toString());
                     editor.putString("cardno", dd.get(i).get(2).toString());
                     editor.putString("balance", dd.get(i).get(8).toString());
-                    editor.commit();
+                    editor.putString("institute_code", dd.get(i).get(9).toString());
+                    editor.apply();
                 }
             }
 
@@ -311,7 +339,21 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.edit_profile) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             Integer position = info.position;
-            Intent intent = new Intent(MainActivity.this, edit_price_list.class);
+            for(int i=0;i<dd.size();i++){
+                if(b.get(position).getCardNo().equals(dd.get(i).get(2))){
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("name", dd.get(i).get(0).toString());
+                    editor.putString("roomno", dd.get(i).get(1).toString());
+                    editor.putString("cardno", dd.get(i).get(2).toString());
+                    editor.putString("balance", dd.get(i).get(8).toString());
+                    editor.putString("program", dd.get(i).get(3).toString());
+                    editor.putString("year", dd.get(i).get(4).toString());
+                    editor.putString("email", dd.get(i).get(5).toString());
+                    editor.putString("institute_code", dd.get(i).get(9).toString());
+                    editor.apply();
+                }
+            }
+            Intent intent = new Intent(MainActivity.this, EditUserActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -322,4 +364,5 @@ public class MainActivity extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 }
+
 

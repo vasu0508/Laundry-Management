@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -50,6 +51,7 @@ public class add_in_price_list_Activity extends AppCompatActivity {
     Button submit,back;
     ProgressBar pb;
     String p,u,r;
+    SharedPreferences sharedPreferences;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class add_in_price_list_Activity extends AppCompatActivity {
         back=findViewById(R.id.back);
         pb=findViewById(R.id.pbar);
         pb.setVisibility(View.INVISIBLE);
+        sharedPreferences=getSharedPreferences(getResources().getString(R.string.sharedpref),MODE_PRIVATE);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,7 +96,7 @@ public class add_in_price_list_Activity extends AppCompatActivity {
                     createSheetsService();
                     ValueRange body = new ValueRange()
                                 .setValues(Arrays.asList(
-                                        Arrays.asList(p,u,r)
+                                        Arrays.asList(p,u,r,sharedPreferences.getString("admin_institute_code",null))
                                 ));
                     appendDataToSheet(body);
                     Intent intent=new Intent(add_in_price_list_Activity.this,PricelistActivity.class);
@@ -131,7 +134,7 @@ public class add_in_price_list_Activity extends AppCompatActivity {
                 .build();
     }
     private static final String SPREADSHEET_ID = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
-    private static final String RANGE = "Sheet2!A:C";
+    private static final String RANGE = "Sheet2!A:D";
 
     private void appendDataToSheet(ValueRange body) {
         try {

@@ -138,12 +138,25 @@ public class PricelistActivity extends AppCompatActivity {
                 startActivity(intent3);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
+                break;
+            case R.id.navigation_received:
+                Intent intent4 = new Intent(PricelistActivity.this, ReceivedActivity.class);
+                startActivity(intent4);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+                break;
+            case R.id.navigation_settings:
+                Intent intent5 = new Intent(PricelistActivity.this, Feedback.class);
+                startActivity(intent5);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+                break;
         }
     }
 
     private void readDataFromGoogleSheet() {
         String spreadsheetId = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
-        String range = "Sheet2!A:C";
+        String range = "Sheet2!A:D";
         String apiKey = "AIzaSyAtB0JJF5JEcr3gCW6W_wz2AHgtBYhGBmk";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://sheets.googleapis.com/")
@@ -162,7 +175,9 @@ public class PricelistActivity extends AppCompatActivity {
                 List<List<Object>> rows = values.getValues();
                 a.add(new pricelistclass(rows.get(0).get(0).toString(), rows.get(0).get(1).toString(), (String) rows.get(0).get(2)));
                 for (int i = 1; i < rows.size(); i++) {
-                    a.add(new pricelistclass(rows.get(i).get(0).toString(), rows.get(i).get(1).toString(), (String) rows.get(i).get(2)));
+                    if(rows.get(i).get(3).toString().equals(sharedpref.getString("admin_institute_code",null))) {
+                        a.add(new pricelistclass(rows.get(i).get(0).toString(), rows.get(i).get(1).toString(), (String) rows.get(i).get(2)));
+                    }
                 }
                 CustomAdapter2 customAdapter = new CustomAdapter2(PricelistActivity.this, R.layout.pricelist_listview, a);
                 pb.setVisibility(View.GONE);

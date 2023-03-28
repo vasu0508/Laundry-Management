@@ -4,10 +4,12 @@
     <string name="title_searchuser">User</string>
     <string name="title_laundaryreceived">Received</string>
     <string name="title_pricelist">Price List</string>
-    <string name="title_settings">Settings</string>
+    <string name="title_feedback">Feedback</string>
+    <string name="title_settings">Options</string>
     <string name="student_name">Name</string>
     <string name="student_room_no">Room No.</string>
     <string name="noreq">No Requests</string>
+    <string name="write_feedback">Write your feedback here..</string>
     <string name="add">Add</string>
     <string name="particular">Particular</string>
     <string name="unit">Unit (Eg:Per Pair)</string>
@@ -35,4 +37,14 @@
     <string name="branch">Branch:</string>
     <string name="year">Year:</string>
     <string name="calculate">Calculate</string>
+    <string name="amount_in_rs">Amount(in Rs):</string>
+    <string name="quantity">Quantity:</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
+    <string name="add_user">Add User</string>
+    <string name="edit_user">Edit User</string>
+    <string name="update">Update</string>
+    <string name="options">Options</string>
+    <string name="laundry_man">Laundry Man</string>
+    <string name="user">User</string>
 </resources>

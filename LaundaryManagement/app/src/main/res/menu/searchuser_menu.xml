@@ -7,7 +7,7 @@
         android:title="@string/view_profile" />
     <item android:id="@+id/edit_profile"
         android:icon="@android:drawable/ic_menu_edit"
-        android:title="@string/edit" />
+        android:title="@string/edit_user" />
     <item android:id="@+id/add_laundry"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/add_laundry" />

@@ -3,6 +3,7 @@ package com.appdev.laundarymanagement;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.app.ProgressDialog;
+import android.widget.EditText;
 import android.widget.Toast;
 import java.util.Properties;
 import javax.mail.Message;
@@ -18,7 +19,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
     private String email;
     private String subject;
     private String message;
-    private ProgressDialog progressDialog;
+    EditText et;
     public SendMail(Context context, String email, String subject, String message){
         this.context = context;
         this.email = email;
@@ -54,13 +55,12 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = ProgressDialog.show(context,"Sending Password","Please wait...",false,false);
+//        progressDialog = ProgressDialog.show(context,"Sending Password","Please wait...",false,false);
     }
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        progressDialog.dismiss();
-        Toast.makeText(context,"Password Sent",Toast.LENGTH_LONG).show();
+//        progressDialog.dismiss();
     }
 
 }
