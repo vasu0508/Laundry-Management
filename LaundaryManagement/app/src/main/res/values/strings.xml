@@ -50,4 +50,5 @@
     <string name="detail">Detail</string>
     <string name="laundry_returned">Laundry Returned</string>
     <string name="edit_laundry">Edit Laundry</string>
+    <string name="delete_laundry">Delete Laundry</string>
 </resources>

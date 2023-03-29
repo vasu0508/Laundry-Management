@@ -360,9 +360,7 @@ public class ReceivedActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         int pos = info.position;
         position2=pos;
-        if (pos != 0) {
             getMenuInflater().inflate(R.menu.recieved_menu, menu);
-        }
     }
     private Sheets sheetsService;
     private void createSheetsService() {
@@ -434,8 +432,6 @@ public class ReceivedActivity extends AppCompatActivity {
                 sp.edit().putString("institute_code", rows.get(position2).get(9).toString()).apply();
                 sp.edit().putString("cost", rows.get(position2).get(4).toString()).apply();
                 readDataFromGoogleSheet5();
-                createSheetsService();
-                deleteRowInBackground(position2);
 
 
 
@@ -522,7 +518,7 @@ public class ReceivedActivity extends AppCompatActivity {
                 requests.add(new Request()
                         .setDeleteDimension(new DeleteDimensionRequest()
                                 .setRange(new DimensionRange()
-                                        .setSheetId(467113428)
+                                        .setSheetId(1659698377)
                                         .setDimension("ROWS")
                                         .setStartIndex(rowIndex)
                                         .setEndIndex(rowIndex + 1))));
@@ -540,6 +536,7 @@ public class ReceivedActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean success) {
+            Toast.makeText(ReceivedActivity.this, "Laundry deleted Successfully", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -575,6 +572,7 @@ public class ReceivedActivity extends AppCompatActivity {
                     .execute();
             Log.d(TAG, "Edit result: " + result1);
             pb.setVisibility(View.GONE);
+            deleteRowInBackground(position2);
         } catch (IOException e) {
             Toast.makeText(this, "Unable to send data", Toast.LENGTH_SHORT).show();
             pb.setVisibility(View.GONE);

@@ -7,6 +7,6 @@
         android:title="@string/laundry_returned" />
     <item android:id="@+id/edit"
         android:icon="@android:drawable/ic_menu_add"
-        android:title="@string/edit_laundry" />
+        android:title="@string/delete_laundry" />
 
 </menu>
