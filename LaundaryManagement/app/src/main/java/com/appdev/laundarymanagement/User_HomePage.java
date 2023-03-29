@@ -49,7 +49,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class User_HomePage extends AppCompatActivity {
     LinearLayout l1,l2,l3;
     ConstraintLayout cl1;
-    Button Logout;
+    Button Logout, feedback;
 
 //    ListView ls;
     TextView t1;
@@ -82,6 +82,7 @@ public class User_HomePage extends AppCompatActivity {
         cl1 = findViewById(R.id.constraintLayout1);
         t1 = findViewById(R.id.textView8);
         Logout = findViewById(R.id.button);
+        feedback = findViewById(R.id.Feedback);
         pb=findViewById(R.id.pbar);
         sp=getSharedPreferences(getResources().getString(R.string.sharedpref),MODE_PRIVATE);
         name.setText(sp.getString("user_name",null));
@@ -112,6 +113,14 @@ public class User_HomePage extends AppCompatActivity {
                 sp.edit().putString("user_islogin","false").apply();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
+            }
+        });
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(User_HomePage.this, UserFeedbackActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 

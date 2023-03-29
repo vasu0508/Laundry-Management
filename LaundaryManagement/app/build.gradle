@@ -7,6 +7,8 @@ android {
     compileSdk 33
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE.md'
+        exclude 'META-INF/LICENSE.md'
     }
     defaultConfig {
         applicationId "com.appdev.laundarymanagement"
@@ -65,7 +67,8 @@ dependencies {
     implementation 'com.google.oauth-client:google-oauth-client-jetty:1.31.0'
     implementation 'com.google.auth:google-auth-library-oauth2-http:0.22.2'
     implementation 'com.google.http-client:google-http-client-jackson2:1.40.0'
-    implementation 'com.sun.mail:android-mail:1.6.3'
+    implementation 'com.sun.mail:android-mail:1.6.6'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.sun.mail:android-activation:1.6.6'
 
 }
