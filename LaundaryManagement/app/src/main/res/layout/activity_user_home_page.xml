@@ -7,12 +7,13 @@
     android:background="#EFF0FC"
     tools:context=".User_HomePage">
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -178,6 +179,18 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/login_btn"
+                    android:text="Logout"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -188,12 +201,12 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="40dp"
                 android:background="@drawable/balance_background"
-                android:drawableStart="@drawable/ic_profile_rupee_icon"
                 android:drawablePadding="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:paddingStart="20dp"
                 android:paddingEnd="4dp"
+                android:gravity="center_vertical"
                 android:text="Amount Remaining"
                 android:textColor="@color/black"
                 android:textSize="27sp"
@@ -242,75 +255,22 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
-
-                <ScrollView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#F7FFFFFF">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#EFF0FC"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="20dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="25dp"
-                                tools:ignore="UselessParent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="40dp"
-                                    android:text="Pending Laundry"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/black"
-                                    android:textSize="20sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="40dp"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:text="View All"
-                                    android:textColor="@color/black"
-                                    android:textSize="15sp"
-                                    android:textStyle="bold" />
-
-                            </RelativeLayout>
-
-                            <ListView
-                                android:id="@+id/my_recycler"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="#EFF0FC">
-
-                            </ListView>
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                </ScrollView>
-
-            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/pbar">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/white"
+            />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

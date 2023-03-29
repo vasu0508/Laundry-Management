@@ -47,4 +47,7 @@
     <string name="options">Options</string>
     <string name="laundry_man">Laundry Man</string>
     <string name="user">User</string>
+    <string name="detail">Detail</string>
+    <string name="laundry_returned">Laundry Returned</string>
+    <string name="edit_laundry">Edit Laundry</string>
 </resources>

@@ -25,6 +25,7 @@ public class LauncherActivity extends AppCompatActivity {
             Intent intent=new Intent(LauncherActivity.this,MainActivity.class);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             finish();
 
         }
@@ -32,6 +33,7 @@ public class LauncherActivity extends AppCompatActivity {
             Intent intent=new Intent(LauncherActivity.this,User_HomePage.class);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             finish();
 
         }
@@ -41,6 +43,8 @@ public class LauncherActivity extends AppCompatActivity {
                 Intent intent=new Intent(LauncherActivity.this,User_Login.class);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
             }
         });
         l2.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +53,8 @@ public class LauncherActivity extends AppCompatActivity {
                 Intent intent=new Intent(LauncherActivity.this,LoginActivity.class);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
             }
         });
     }

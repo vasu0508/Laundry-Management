@@ -48,6 +48,7 @@ public class LaundryManSignUpActivity extends AppCompatActivity {
     String pass;
     Integer code=0;
     ProgressBar pb;
+    Button back;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,16 @@ public class LaundryManSignUpActivity extends AppCompatActivity {
         laundryman=findViewById(R.id.editTextTextPersonName);
         submit=findViewById(R.id.button2);
         pb=findViewById(R.id.pbar);
+        back = findViewById(R.id.button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LaundryManSignUpActivity.this, LauncherActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+            }
+        });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

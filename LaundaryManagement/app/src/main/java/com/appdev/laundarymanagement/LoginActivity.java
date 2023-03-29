@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText email,password,instcode;
     AppCompatButton login;
     ProgressBar pb;
+    Button back;
     SharedPreferences sp;
     Integer flag=0;
 
@@ -44,14 +46,25 @@ public class LoginActivity extends AppCompatActivity {
         instcode=findViewById(R.id.editTextTextPersonName2);
         password=findViewById(R.id.editTextTextPersonName);
         login=findViewById(R.id.button2);
+        back = findViewById(R.id.button);
         pb=findViewById(R.id.pbar);
         sp=getSharedPreferences(getResources().getString(R.string.sharedpref),MODE_PRIVATE);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
+            }
+        });
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(LoginActivity.this,LaundryManSignUpActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
             }
         });
         login.setOnClickListener(new View.OnClickListener() {

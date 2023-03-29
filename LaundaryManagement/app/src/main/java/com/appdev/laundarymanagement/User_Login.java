@@ -25,7 +25,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class User_Login extends AppCompatActivity {
-    Button login;
+    Button login, back;
     EditText email,password,institute_code;
     ProgressBar pb;
     SharedPreferences sp;
@@ -40,6 +40,7 @@ public class User_Login extends AppCompatActivity {
         password=findViewById(R.id.editTextTextPersonName5);
         institute_code=findViewById(R.id.editTextTextPersonName7);
         sp=getSharedPreferences(getResources().getString(R.string.sharedpref),MODE_PRIVATE);
+        back = findViewById(R.id.button3);
         pb=findViewById(R.id.pbar);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +61,15 @@ public class User_Login extends AppCompatActivity {
                     login.setEnabled(false);
                     readDataFromGoogleSheet2();
                 }
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(User_Login.this, LauncherActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
             }
         });
     }
@@ -120,6 +130,7 @@ public class User_Login extends AppCompatActivity {
                 // Handle error
             }
         });
+
 
     }
 }

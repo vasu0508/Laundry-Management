@@ -115,7 +115,7 @@
                 </ImageView>
 
                 <TextView
-                    android:id="@+id/faltu"
+                    android:id="@+id/cardno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -129,7 +129,7 @@
                     android:id="@+id/faltu_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/faltu"
+                    android:layout_below="@id/cardno"
                     android:layout_centerInParent="true"
                     android:includeFontPadding="false"
                     android:text="Card No"
@@ -150,6 +150,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:hint="Full Name">
             
             <com.google.android.material.textfield.TextInputEditText
@@ -158,6 +159,7 @@
                 android:drawableLeft="@drawable/ic_profile_person"
                 android:drawablePadding="10dp"
                 android:text="Keyush Shah"
+                android:id="@+id/name"
                 android:background="@color/white">
             </com.google.android.material.textfield.TextInputEditText>
 
@@ -166,6 +168,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:hint="Email ID">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -174,6 +177,7 @@
                 android:drawableLeft="@drawable/ic_profile_email"
                 android:drawablePadding="10dp"
                 android:text="shah.keyush2002@gmail.com"
+                android:id="@+id/email"
                 android:background="@color/white">
             </com.google.android.material.textfield.TextInputEditText>
 
@@ -182,6 +186,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:hint="Program">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -190,6 +195,7 @@
                 android:drawableLeft="@drawable/ic_profile_program"
                 android:drawablePadding="10dp"
                 android:text="B.Tech IT"
+                android:id="@+id/program"
                 android:background="@color/white">
 
             </com.google.android.material.textfield.TextInputEditText>
@@ -199,6 +205,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:hint="Year">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -207,6 +214,7 @@
                 android:drawableLeft="@drawable/ic_profile_person"
                 android:drawablePadding="10dp"
                 android:text="3rd"
+                android:id="@+id/year"
                 android:background="@color/white">
 
             </com.google.android.material.textfield.TextInputEditText>
@@ -216,6 +224,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:hint="Room No">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -224,6 +233,7 @@
                 android:drawableLeft="@drawable/ic_profile_room_no"
                 android:drawablePadding="10dp"
                 android:text="320"
+                android:id="@+id/roomno"
                 android:background="@color/white">
             </com.google.android.material.textfield.TextInputEditText>
 
@@ -232,6 +242,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
             android:hint="Institute Code">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -240,6 +251,7 @@
                 android:drawableLeft="@drawable/ic_profile_institute_code"
                 android:drawablePadding="10dp"
                 android:text="Venus Laundry"
+                android:id="@+id/institutecode"
                 android:background="@color/white">
             </com.google.android.material.textfield.TextInputEditText>
 
@@ -250,6 +262,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/black"
             android:text="Back"
+            android:id="@+id/back"
             android:layout_marginTop="10dp"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck">
