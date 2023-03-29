@@ -257,17 +257,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/black"
-            android:text="Back"
-            android:id="@+id/back"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/white"
-            tools:ignore="TextContrastCheck">
-
-        </Button>
     </LinearLayout>
 
     </LinearLayout>

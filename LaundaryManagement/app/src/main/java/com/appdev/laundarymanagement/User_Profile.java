@@ -31,7 +31,6 @@ public class User_Profile extends AppCompatActivity {
         program=findViewById(R.id.program);
         year=findViewById(R.id.year);
         roomno=findViewById(R.id.roomno);
-        back=findViewById(R.id.back);
         institutecode=findViewById(R.id.institutecode);
         sp=getSharedPreferences(getResources().getString(R.string.sharedpref),MODE_PRIVATE);
         fullname.setText(sp.getString("user_name",null));
@@ -43,15 +42,6 @@ public class User_Profile extends AppCompatActivity {
         year.setText(sp.getString("user_year",null));
         roomno.setText(sp.getString("user_room_no",null));
         institutecode.setText(sp.getString("user_institute_code",null));
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(User_Profile.this,User_HomePage.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
-            }
-        });
 
     }
 }

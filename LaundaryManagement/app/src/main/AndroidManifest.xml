@@ -20,7 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".EditLaundryActivity"
+            android:name=".LaundryViewProfile"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

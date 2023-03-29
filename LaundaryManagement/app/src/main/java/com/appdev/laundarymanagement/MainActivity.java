@@ -320,8 +320,8 @@ public class MainActivity extends AppCompatActivity {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int position = info.position;
             System.out.println(b.get(position).getCardNo());
-            for(int i=0;i<dd.size();i++){
-                if(b.get(position).getCardNo().equals(dd.get(i).get(2))){
+            for (int i = 0; i < dd.size(); i++) {
+                if (b.get(position).getCardNo().equals(dd.get(i).get(2))) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("name", dd.get(i).get(0).toString());
                     editor.putString("roomno", dd.get(i).get(1).toString());
@@ -339,8 +339,8 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.edit_profile) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             Integer position = info.position;
-            for(int i=0;i<dd.size();i++){
-                if(b.get(position).getCardNo().equals(dd.get(i).get(2))){
+            for (int i = 0; i < dd.size(); i++) {
+                if (b.get(position).getCardNo().equals(dd.get(i).get(2))) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("name", dd.get(i).get(0).toString());
                     editor.putString("roomno", dd.get(i).get(1).toString());
@@ -357,9 +357,28 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
-        }
-        else if (item.getItemId() == R.id.viewprofile){
+        } else if (item.getItemId() == R.id.viewprofile) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            Integer position = info.position;
+            for(int i = 0; i < dd.size(); i++) {
+                if (b.get(position).getCardNo().equals(dd.get(i).get(2))) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("user_name", dd.get(i).get(0).toString());
+                    editor.putString("user_room_no", dd.get(i).get(1).toString());
+                    editor.putString("user_card_no", dd.get(i).get(2).toString());
+                    editor.putString("user_balance", dd.get(i).get(8).toString());
+                    editor.putString("user_program", dd.get(i).get(3).toString());
+                    editor.putString("user_year", dd.get(i).get(4).toString());
+                    editor.putString("user_email_id", dd.get(i).get(5).toString());
+                    editor.putString("user_institute_code", dd.get(i).get(9).toString());
+                    editor.apply();
+                    Intent intent = new Intent(MainActivity.this, LaundryViewProfile.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+            }
             return true;
+
         }
         return super.onContextItemSelected(item);
     }
