@@ -7,7 +7,14 @@
     android:background="#EFF0FC"
     tools:context=".User_HomePage">
 
-
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/swipe">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,7 +61,7 @@
                     android:layout_marginTop="111dp"
                     android:text="Keyush Shah"
                     android:textColor="#ffffff"
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -155,9 +162,9 @@
                 android:inputType="textPersonName"
                 android:paddingStart="20dp"
                 android:paddingEnd="4dp"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:text="Amount Remaining"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="27sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -181,5 +188,6 @@
             android:indeterminateTint="@color/white"
             />
     </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

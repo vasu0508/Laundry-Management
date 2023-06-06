@@ -158,7 +158,7 @@ public class SearchUserActivity extends AppCompatActivity {
                     ls.setAdapter(customAdapter2);
                 }
                 else{
-                    b.add(new newClass("No Match","",""));
+                    b.add(new newClass("No Match","","",""));
                     CustomAdapter customAdapter2 = new CustomAdapter(SearchUserActivity.this, R.layout.searchuser_listview, b);
                     ls.setAdapter(customAdapter2);
                     Toast.makeText(SearchUserActivity.this, "No match found", Toast.LENGTH_SHORT).show();
@@ -189,7 +189,7 @@ public class SearchUserActivity extends AppCompatActivity {
                             issearch=false;
                         }
                     } else {
-                        b.add(new newClass("No Match","",""));
+                        b.add(new newClass("No Match","","",""));
                         issearch=false;
                         CustomAdapter customAdapter2 = new CustomAdapter(SearchUserActivity.this, R.layout.searchuser_listview, b);
                         ls.setAdapter(customAdapter2);
@@ -264,10 +264,10 @@ public class SearchUserActivity extends AppCompatActivity {
                 System.out.println(response.toString());
                 ValueRange values = response.body();
                 List<List<Object>> rows = values.getValues();
-                a.add(new newClass(rows.get(0).get(1).toString(),rows.get(0).get(0).toString(),rows.get(0).get(2).toString()));
+                a.add(new newClass(rows.get(0).get(1).toString(),rows.get(0).get(0).toString(),rows.get(0).get(2).toString(),sharedPreferences.getString("admin_institute_code",null)));
                 for(int i=1;i<rows.size();i++){
                     if(rows.get(i).get(9).toString().equals(sharedPreferences.getString("admin_institute_code",null))) {
-                        a.add(new newClass(rows.get(i).get(1).toString(), rows.get(i).get(0).toString(), rows.get(i).get(2).toString()));
+                        a.add(new newClass(rows.get(i).get(1).toString(), rows.get(i).get(0).toString(), rows.get(i).get(2).toString(),sharedPreferences.getString("admin_institute_code",null)));
                     }
                 }
                 b=a;
@@ -279,7 +279,7 @@ public class SearchUserActivity extends AppCompatActivity {
                 if(a.size()==1){
                     ArrayList<newClass> d;
                     d=new ArrayList<newClass>();
-                    d.add(new newClass("No Requests","",""));
+                    d.add(new newClass("No Requests","","",""));
                     CustomAdapter customAdapter2=new CustomAdapter(SearchUserActivity.this,R.layout.searchuser_listview,d);
                     ls.setAdapter(customAdapter2);
                 }
@@ -315,7 +315,7 @@ public class SearchUserActivity extends AppCompatActivity {
             Integer position = info.position;
             System.out.println(a.get(position).gettitle());
             for(int i=0;i<dd.size();i++){
-                if(b.get(position).getCardNo().equals(dd.get(i).get(2))){
+                if(b.get(position).getCardNo().equals(dd.get(i).get(2)) && b.get(position).getInstituteCode().equals(dd.get(i).get(9))){
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("name", dd.get(i).get(0).toString());
                     editor.putString("roomno", dd.get(i).get(1).toString());
@@ -334,7 +334,7 @@ public class SearchUserActivity extends AppCompatActivity {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             Integer position = info.position;
             for(int i=0;i<dd.size();i++){
-                if(b.get(position).getCardNo().equals(dd.get(i).get(2))){
+                if(b.get(position).getCardNo().equals(dd.get(i).get(2)) && b.get(position).getInstituteCode().equals(dd.get(i).get(9))){
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("name", dd.get(i).get(0).toString());
                     editor.putString("roomno", dd.get(i).get(1).toString());
@@ -356,7 +356,7 @@ public class SearchUserActivity extends AppCompatActivity {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             Integer position = info.position;
             for(int i=0;i<dd.size();i++){
-                if(b.get(position).getCardNo().equals(dd.get(i).get(2))){
+                if(b.get(position).getCardNo().equals(dd.get(i).get(2)) && b.get(position).getInstituteCode().equals(dd.get(i).get(9))){
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("user_name", dd.get(i).get(0).toString());
                     editor.putString("user_room_no", dd.get(i).get(1).toString());

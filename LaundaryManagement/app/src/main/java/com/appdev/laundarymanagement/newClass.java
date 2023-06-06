@@ -4,11 +4,13 @@ public class newClass {
     private String title;
     private String Value;
     private String CardNo;
+    private String InstituteCode;
 
-    public newClass(String name, String roomno,String CardNo) {
+    public newClass(String name, String roomno,String CardNo,String InstituteCode){
         this.Value = roomno;
         this.title = name;
         this.CardNo=CardNo;
+        this.InstituteCode=InstituteCode;
     }
 
     public String getValue() {
@@ -33,5 +35,13 @@ public class newClass {
 
     public String getCardNo() {
         return CardNo;
+    }
+
+    public String getInstituteCode() {
+        return InstituteCode;
+    }
+
+    public void setInstituteCode(String instituteCode) {
+        InstituteCode = instituteCode;
     }
 }

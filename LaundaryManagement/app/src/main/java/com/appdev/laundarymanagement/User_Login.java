@@ -109,8 +109,9 @@ public class User_Login extends AppCompatActivity {
                         Toast.makeText(User_Login.this, "Login Successful.", Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                        finish();
+                        finishAffinity();
                         flag=1;
+                        break;
                     }
 
                 }

@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     android:background="#EFF0FC"
     tools:context=".User_HomePage">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/swipe">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,7 +39,7 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="410dp"
+                    android:layout_width="match_parent"
                     android:layout_height="350dp"
                     android:layout_marginBottom="46dp"
                     android:scaleType="fitXY"
@@ -47,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:layout_marginTop="70dp"
+                    android:layout_marginTop="170dp"
                     android:text="Hello"
                     android:textColor="#ffffff"
                     android:textSize="25sp"
@@ -62,7 +70,7 @@
                     android:layout_marginTop="8dp"
                     android:text="Keyush Shah"
                     android:textColor="#ffffff"
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/textView3"
                     app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -264,7 +272,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/button"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints"></Button>
+                    tools:ignore="MissingConstraints"/>
 
                 <Button
                     android:id="@+id/button"
@@ -280,23 +288,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0"
-                    tools:ignore="MissingConstraints"></Button>
+                    tools:ignore="MissingConstraints"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/pbar">
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:indeterminateTint="@color/white"/>
-        </RelativeLayout>
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/pbar">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/white"/>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -50,7 +51,7 @@ public class User_HomePage extends AppCompatActivity {
     LinearLayout l1,l2,l3;
     ConstraintLayout cl1;
     Button Logout, feedback;
-
+    SwipeRefreshLayout swipeRefreshLayout;
 //    ListView ls;
     TextView t1;
     Integer currentIndex = 1;
@@ -97,6 +98,14 @@ public class User_HomePage extends AppCompatActivity {
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
+        swipeRefreshLayout= (SwipeRefreshLayout)findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        readDataFromGoogleSheet();
+                    }
+                });
         l2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,8 +137,9 @@ public class User_HomePage extends AppCompatActivity {
         texts = new String[]{"Request for Laundry", "Cancel Request"};
         cl1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                cl1.setEnabled(false);
+            public void onClick(View v){
+                pb.setVisibility(View.VISIBLE);
+                cl1.setClickable(false);
                 // Get the current color from the array using the current color index
                 readDataFromGoogleSheet2();
             }
@@ -139,6 +149,7 @@ public class User_HomePage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(User_HomePage.this, User_Profile.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
     }
@@ -248,25 +259,25 @@ private void readDataFromGoogleSheet2() {
                 t1.setTextColor(colors[1]);
                 t1.setText(texts[1]);
             }
-            cl1.setEnabled(true);
+            cl1.setClickable(true);
             pb.setVisibility(View.GONE);
         }
         @Override
         public void onFailure(@NonNull Call<ValueRange> call, @NonNull Throwable t) {
-            cl1.setEnabled(true);
+            cl1.setClickable(true);
             pb.setVisibility(View.GONE);
             Toast.makeText(User_HomePage.this, "Unable to fetch data", Toast.LENGTH_SHORT).show();
-//            pb.setVisibility(View.GONE);
+            pb.setVisibility(View.GONE);
             // Handle error
         }
     });
 
 }
 private void readDataFromGoogleSheet() {
-        pb.setVisibility(View.VISIBLE);
     String spreadsheetId = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
     String range = "Sheet1!K:T";
     String apiKey = "AIzaSyAtB0JJF5JEcr3gCW6W_wz2AHgtBYhGBmk";
+    pb.setVisibility(View.VISIBLE);
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://sheets.googleapis.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -288,6 +299,17 @@ private void readDataFromGoogleSheet() {
                     amount.setText("Balance: ₹"+rows.get(i).get(8).toString());
                     sp.edit().putString("user_balance",rows.get(i).get(8).toString()).apply();
                     posit=i;
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("user_name", rows.get(i).get(0).toString());
+                    editor.putString("user_room_no", rows.get(i).get(1).toString());
+                    editor.putString("user_card_no", rows.get(i).get(2).toString());
+                    editor.putString("user_balance", rows.get(i).get(8).toString());
+                    editor.putString("user_program", rows.get(i).get(3).toString());
+                    editor.putString("user_year", rows.get(i).get(4).toString());
+                    editor.putString("user_email_id", rows.get(i).get(5).toString());
+                    editor.putString("user_institute_code", rows.get(i).get(9).toString());
+                    editor.apply();
+                    name.setText(sp.getString("user_name",null));
                 }
             }
             if(laundryreq.equals("FALSE")){
@@ -299,11 +321,13 @@ private void readDataFromGoogleSheet() {
                 t1.setText(texts[1]);
             }
             pb.setVisibility(View.GONE);
+            swipeRefreshLayout.setRefreshing(false);
         }
         @Override
         public void onFailure(@NonNull Call<ValueRange> call, @NonNull Throwable t) {
-            cl1.setEnabled(true);
+            cl1.setClickable(true);
             pb.setVisibility(View.GONE);
+            swipeRefreshLayout.setRefreshing(false);
             // Handle error
         }
     });

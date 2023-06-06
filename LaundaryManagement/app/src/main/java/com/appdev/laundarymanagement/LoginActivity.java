@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Login Successful.", Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                        finish();
+                        finishAffinity();
                         flag=1;
                     }
 

@@ -60,7 +60,6 @@ public class user_history extends AppCompatActivity {
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        a=new ArrayList<>();
                         readDataFromGoogleSheet();
                         // Your code goes here
                         // In this code, we are just
@@ -78,7 +77,8 @@ public class user_history extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Integer j=i;
-                sp.edit().putString("hist_position",j.toString()).apply();
+                sp.edit().putString("hist_position_date",a.get(i).getDate().toString()).apply();
+                sp.edit().putString("hist_position_time",a.get(i).getTime().toString()).apply();
                 Intent intent3 = new Intent(user_history.this, History_bif_Activity.class);
                 startActivity(intent3);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -102,6 +102,7 @@ public class user_history extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ValueRange> call, @NonNull Response<ValueRange> response) {
                 //try {
+                a=new ArrayList<>();
                 System.out.println(response.toString());
                 ValueRange values = response.body();
                 List<List<Object>> rows = values.getValues();

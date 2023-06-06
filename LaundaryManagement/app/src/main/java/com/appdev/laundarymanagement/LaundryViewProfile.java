@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -50,7 +51,7 @@ public class LaundryViewProfile extends AppCompatActivity {
     LinearLayout l1,l2,l3;
     ConstraintLayout cl1;
     Button Logout;
-
+    SwipeRefreshLayout swipeRefreshLayout;
     //    ListView ls;
     TextView t1;
     Integer currentIndex = 1;
@@ -96,14 +97,20 @@ public class LaundryViewProfile extends AppCompatActivity {
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
-
-        colors = new int[]{Color.GREEN, Color.RED};
-        texts = new String[]{"Request for Laundry", "Cancel Request"};
+        swipeRefreshLayout= (SwipeRefreshLayout)findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        readDataFromGoogleSheet();
+                    }
+                });
         l1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LaundryViewProfile.this, User_Profile.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
     }
@@ -192,52 +199,29 @@ public class LaundryViewProfile extends AppCompatActivity {
                         amount.setText("Balance: ₹"+rows.get(i).get(8).toString());
                         sp.edit().putString("user_balance",rows.get(i).get(8).toString()).apply();
                         posit=i;
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("user_name", rows.get(i).get(0).toString());
+                        editor.putString("user_room_no", rows.get(i).get(1).toString());
+                        editor.putString("user_card_no", rows.get(i).get(2).toString());
+                        editor.putString("user_balance", rows.get(i).get(8).toString());
+                        editor.putString("user_program", rows.get(i).get(3).toString());
+                        editor.putString("user_year", rows.get(i).get(4).toString());
+                        editor.putString("user_email_id", rows.get(i).get(5).toString());
+                        editor.putString("user_institute_code", rows.get(i).get(9).toString());
+                        editor.apply();
+                        name.setText(sp.getString("user_name",null));
                     }
                 }
                 pb.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
             }
             @Override
             public void onFailure(@NonNull Call<ValueRange> call, @NonNull Throwable t) {
                 cl1.setEnabled(true);
                 pb.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
                 // Handle error
             }
         });
-    }
-    private Sheets sheetsService;
-    private void createSheetsService() {
-        HttpTransport transport = AndroidHttp.newCompatibleTransport();
-        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        GoogleCredential credential = null;
-        try {
-            InputStream inputStream = getResources().getAssets().open("laundry-management-377814-045b05e9b598.json");
-            credential = GoogleCredential.fromStream(inputStream, transport, jsonFactory)
-                    .createScoped(Collections.singleton(SheetsScopes.SPREADSHEETS));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        sheetsService = new Sheets.Builder(transport, jsonFactory, credential)
-                .setApplicationName("Laundry Management")
-                .build();
-    }
-    private static final String SPREADSHEET_ID = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
-    private void editDataToSheet(ValueRange body1) {
-        Integer pos=posit;
-        pos=pos+1;
-        String posit=pos.toString();
-        String RANGE = "Sheet1!R"+posit;
-        try {
-            UpdateValuesResponse result1 = sheetsService.spreadsheets().values()
-                    .update(SPREADSHEET_ID, RANGE, body1)
-                    .setValueInputOption("USER_ENTERED")
-                    .execute();
-            Log.d(TAG, "Edit result: " + result1);
-            Toast.makeText(this, "Laundry Request Successful", Toast.LENGTH_SHORT).show();
-            pb.setVisibility(View.GONE);
-        } catch (IOException e) {
-            Toast.makeText(this, "Unable to send data", Toast.LENGTH_SHORT).show();
-            pb.setVisibility(View.GONE);
-            e.printStackTrace();
-        }
     }
 }

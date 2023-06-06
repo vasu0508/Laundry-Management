@@ -7,14 +7,16 @@ public class ReceivedClass {
     private String quantity;
     private String date;
     private String time;
+    private String cardNo;
 
-    public ReceivedClass(String name, String roomno,String amount,String quantity,String date,String time) {
+    public ReceivedClass(String name, String roomno,String amount,String quantity,String date,String time,String cardNo){
         this.roomno = roomno;
         this.name = name;
         this.quantity=quantity;
         this.amount=amount;
         this.date=date;
         this.time=time;
+        this.cardNo=cardNo;
 
     }
 
@@ -64,5 +66,13 @@ public class ReceivedClass {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getCardNo() {
+        return cardNo;
+    }
+
+    public void setCardNo(String cardNo) {
+        this.cardNo = cardNo;
     }
 }

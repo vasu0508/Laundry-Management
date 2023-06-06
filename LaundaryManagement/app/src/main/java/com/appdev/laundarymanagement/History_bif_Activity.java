@@ -79,7 +79,6 @@ public class History_bif_Activity extends AppCompatActivity {
                 .build();
 
         SheetsService sheetsService = retrofit.create(SheetsService.class);
-
         Call<ValueRange> call = sheetsService.getValues(spreadsheetId, range, apiKey);
         call.enqueue(new Callback<ValueRange>() {
             @Override
@@ -92,7 +91,7 @@ public class History_bif_Activity extends AppCompatActivity {
                 Integer j=0;
                 for(int i=1;i<rows.size();i++){
                     if(rows.get(i).get(0).equals(sp.getString("user_institute_code",null)) && rows.get(i).get(8).toString().equals(sp.getString("user_card_no",null))) {
-                        if(j.toString().equals(sp.getString("hist_position",null))){
+                        if(rows.get(i).get(1).toString().equals(sp.getString("hist_position_date",null)) && rows.get(i).get(2).toString().equals(sp.getString("hist_position_time",null))){
                             for(int z=9;z<rows.get(i).size();z=z+2){
                                 if(z+1==rows.size()){
                                     break;

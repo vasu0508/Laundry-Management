@@ -37,9 +37,10 @@ public class CustomAdapter4 extends ArrayAdapter<ReceivedClass> {
         String quantity = getItem(position).getQuantity();
         String date=getItem(position).getDate();
         String time=getItem(position).getTime();
+        String cardNo=getItem(position).getCardNo();
 
         //Create the person object with the information
-        ReceivedClass rclass = new ReceivedClass(name,roomno,amount,quantity,date,time);
+        ReceivedClass rclass = new ReceivedClass(name,roomno,amount,quantity,date,time,cardNo);
 
         //create the view result for showing the animation
         final View result;

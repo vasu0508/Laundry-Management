@@ -139,7 +139,7 @@ public class AddLaundryActivity extends AppCompatActivity {
                 if(Double.parseDouble(totalcost.toString()) <= Double.parseDouble(balance.toString())) {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                     String currentDateandTime = sdf.format(new Date());
-                    SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                    SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
                     String currentTime = sdf2.format(new Date());
                     createSheetsService();
                     ValueRange body = new ValueRange();
@@ -216,7 +216,7 @@ public class AddLaundryActivity extends AppCompatActivity {
     }
     private void readDataFromGoogleSheet() {
         String spreadsheetId = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
-        String range = "Sheet2!A:C";
+        String range = "Sheet2!A:D";
         String apiKey = "AIzaSyAtB0JJF5JEcr3gCW6W_wz2AHgtBYhGBmk";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://sheets.googleapis.com/")
@@ -234,13 +234,16 @@ public class AddLaundryActivity extends AppCompatActivity {
                 ValueRange values = response.body();
                 List<List<Object>> rows = values.getValues();
                 for (int i = 1; i < rows.size(); i++) {
-                    a.add(new pricelistclass(rows.get(i).get(0).toString(), rows.get(i).get(1).toString(), (String) rows.get(i).get(2)));
+                    if(rows.get(i).get(3).toString().equals(sharedPreferences.getString("admin_institute_code",null)))
+                    {
+                        a.add(new pricelistclass(rows.get(i).get(0).toString(), rows.get(i).get(1).toString(), (String) rows.get(i).get(2)));
+                    }
                 }
                 customAdapter2 = new CustomAdapter3(AddLaundryActivity.this, R.layout.addlaundrylistview, a,a.size());
                 ls.setAdapter(customAdapter2);
                 ls.setClickable(true);
                 System.out.println(a.size() == 1);
-                if (a.size() == 1) {
+                if (a.size() == 0) {
                     ArrayList<pricelistclass> d;
                     d = new ArrayList<pricelistclass>();
                     d.add(new pricelistclass("No Particulars added", "", ""));
@@ -317,7 +320,6 @@ public class AddLaundryActivity extends AppCompatActivity {
                     .setValueInputOption("USER_ENTERED")
                     .execute();
             Log.d(TAG, "Edit result: " + result1);
-            Toast.makeText(this, "Data Edited Successfully", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             Toast.makeText(this, "Unable to send data", Toast.LENGTH_SHORT).show();
             e.printStackTrace();

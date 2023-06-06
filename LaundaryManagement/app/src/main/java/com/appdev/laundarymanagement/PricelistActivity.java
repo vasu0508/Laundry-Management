@@ -68,6 +68,7 @@ public class PricelistActivity extends AppCompatActivity {
     ProgressBar pb;
     SharedPreferences sharedpref;
     ArrayList<pricelistclass> a = new ArrayList<>();
+    List<List<Object>> sheetdata;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -173,6 +174,7 @@ public class PricelistActivity extends AppCompatActivity {
                 System.out.println(response.toString());
                 ValueRange values = response.body();
                 List<List<Object>> rows = values.getValues();
+                sheetdata = rows;
                 a.add(new pricelistclass(rows.get(0).get(0).toString(), rows.get(0).get(1).toString(), (String) rows.get(0).get(2)));
                 for (int i = 1; i < rows.size(); i++) {
                     if(rows.get(i).get(3).toString().equals(sharedpref.getString("admin_institute_code",null))) {
@@ -225,9 +227,15 @@ public class PricelistActivity extends AppCompatActivity {
             // Delete the item
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int position = info.position;
+            pricelistclass selecteditem = a.get(position);
+            for(int i=0;i<sheetdata.size();i++){
+                if(sheetdata.get(i).get(0).toString().equals(selecteditem.getParticular()) && sheetdata.get(i).get(2).toString().equals(selecteditem.getRate()) && sheetdata.get(i).get(1).toString().equals(selecteditem.getUnit()) && sharedpref.getString("admin_institute_code",null).equals(sheetdata.get(i).get(3).toString())){
+                    deleteRowInBackground(i);
+                    break;
+                }
+            }
 //            Integer pos=position+1;
 //            String range="Sheet2!A"+pos.toString()+":C"+pos.toString();
-            deleteRowInBackground(position);
             return true;
         } else if (item.getItemId() == R.id.edit) {
             // Delete the item
@@ -235,10 +243,15 @@ public class PricelistActivity extends AppCompatActivity {
             Integer position = info.position;
             pricelistclass selecteditem = a.get(position);
             SharedPreferences.Editor editor = sharedpref.edit();
+            for(Integer i=0;i<sheetdata.size();i++){
+                if(sheetdata.get(i).get(0).toString().equals(selecteditem.getParticular()) && sheetdata.get(i).get(2).toString().equals(selecteditem.getRate()) && sheetdata.get(i).get(1).toString().equals(selecteditem.getUnit()) && sharedpref.getString("admin_institute_code",null).equals(sheetdata.get(i).get(3).toString())){
+                    editor.putString("selected position", (i).toString());
+                    break;
+                }
+            }
             editor.putString("selected particular", selecteditem.getParticular());
             editor.putString("selected rate", selecteditem.getRate());
             editor.putString("selected unit", selecteditem.getUnit());
-            editor.putString("selected position", (position).toString());
             editor.commit();
             Intent intent = new Intent(PricelistActivity.this, edit_price_list.class);
             startActivity(intent);

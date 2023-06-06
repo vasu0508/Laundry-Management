@@ -3,21 +3,26 @@ package com.appdev.laundarymanagement;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -47,6 +52,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import kotlin.random.Random;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,6 +73,8 @@ public class ReceivedActivity extends AppCompatActivity {
     ArrayList<ReceivedClass> a= new ArrayList<>();
     SharedPreferences sp;
     Integer position2;
+    List<List<Object>> sheetdata;
+    String email;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +141,7 @@ public class ReceivedActivity extends AppCompatActivity {
                 } else {
                     ArrayList<newClass> c = new ArrayList<>();
                     issearch=false;
-                    c.add(new newClass("No Match", "",""));
+                    c.add(new newClass("No Match", "","",""));
                     CustomAdapter customAdapter2 = new CustomAdapter(ReceivedActivity.this, R.layout.searchuser_listview, c);
                     ls.setAdapter(customAdapter2);
                     Toast.makeText(ReceivedActivity.this, "No match found", Toast.LENGTH_SHORT).show();
@@ -165,7 +173,7 @@ public class ReceivedActivity extends AppCompatActivity {
                         }
                     } else {
                         ArrayList<newClass> c = new ArrayList<>();
-                        c.add(new newClass("No Match", "",""));
+                        c.add(new newClass("No Match", "","",""));
                         CustomAdapter customAdapter2 = new CustomAdapter(ReceivedActivity.this, R.layout.searchuser_listview, c);
                         issearch=false;
                         ls.setAdapter(customAdapter2);
@@ -229,9 +237,11 @@ public class ReceivedActivity extends AppCompatActivity {
                 System.out.println(response.toString());
                 ValueRange values = response.body();
                 List<List<Object>> rows = values.getValues();
+                sheetdata= rows;
                 for(int i=rows.size()-1;i>0;i--){
+                    ls.setEnabled(true);
                     if(rows.get(i).get(0).toString().equals(sp.getString("admin_institute_code",null)) && rows.get(i).get(3).toString().equals("Received")) {
-                        a.add(new ReceivedClass(rows.get(i).get(7).toString(), rows.get(i).get(6).toString(), rows.get(i).get(4).toString(), rows.get(i).get(5).toString(), rows.get(i).get(1).toString(), rows.get(i).get(2).toString()));
+                        a.add(new ReceivedClass(rows.get(i).get(7).toString(), rows.get(i).get(6).toString(), rows.get(i).get(4).toString(), rows.get(i).get(5).toString(), rows.get(i).get(1).toString(), rows.get(i).get(2).toString(),rows.get(i).get(8).toString()));
                     }
                 }
                 dd=rows;
@@ -242,9 +252,13 @@ public class ReceivedActivity extends AppCompatActivity {
                 if(a.size()==0){
                     ArrayList<ReceivedClass> d;
                     d=new ArrayList<ReceivedClass>();
-                    d.add(new ReceivedClass("No Received","","","","",""));
+                    d.add(new ReceivedClass("No Received","","","","","",""));
                     CustomAdapter4 customAdapter2=new CustomAdapter4(ReceivedActivity.this,R.layout.received_listview,d);
                     ls.setAdapter(customAdapter2);
+                    ls.setEnabled(false);
+                }
+                else{
+                    ls.setEnabled(true);
                 }
 
 
@@ -262,7 +276,7 @@ public class ReceivedActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<ValueRange> call, @NonNull Throwable t) {
                 Toast.makeText(ReceivedActivity.this, "Unable to fetch data", Toast.LENGTH_SHORT).show();
                 ArrayList<ReceivedClass> e=new ArrayList<ReceivedClass>();
-                e.add(new ReceivedClass("No Internet Connection","", "","","",""));
+                e.add(new ReceivedClass("No Internet Connection","", "","","","",""));
                 CustomAdapter4 customAdapter2=new CustomAdapter4(ReceivedActivity.this,R.layout.received_listview,e);
                 pb.setVisibility(View.GONE);
                 ls.setAdapter(customAdapter2);
@@ -271,73 +285,22 @@ public class ReceivedActivity extends AppCompatActivity {
         });
 
     }
-    private void readDataFromGoogleSheet2() {
-        String spreadsheetId = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
-        String range = "Sheet3!A1:AAA";
-        String apiKey = "AIzaSyAtB0JJF5JEcr3gCW6W_wz2AHgtBYhGBmk";
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://sheets.googleapis.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        SheetsService sheetsService = retrofit.create(SheetsService.class);
-
-        Call<ValueRange> call = sheetsService.getValues(spreadsheetId, range, apiKey);
-        call.enqueue(new Callback<ValueRange>() {
-            @Override
-            public void onResponse(@NonNull Call<ValueRange> call, @NonNull Response<ValueRange> response) {
-                //try {
-                System.out.println(response.toString());
-                ValueRange values = response.body();
-                List<List<Object>> rows = values.getValues();
-                Integer j=0;
-                for(int i=rows.size()-1;i>=0;i--){
-                    if(rows.get(i).get(0).toString().equals(sp.getString("admin_institute_code",null)) && rows.get(i).get(3).toString().equals("Received")) {
-                        if(j==position2){
-                            position2=i;
-                        }
-                        j=j+1;
-                    }
-                }
-                createSheetsService();
-                ValueRange body = new ValueRange()
-                        .setValues(Arrays.asList(
-                                Arrays.asList("Returned")
-                        ));
-                editDataToSheet(body);
-
-
-                // Process the rows here
-                //System.out.println(rows.toString());
-                // Toast.makeText(ReceivedActivity.this, rows.get(1).get(0).toString(), Toast.LENGTH_SHORT).show();
-                //}
-//                catch (AssertionError a){
-//                    System.out.println(a.getMessage());
-//                    Toast.makeText(ReceivedActivity.this, a.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ValueRange> call, @NonNull Throwable t) {
-                Toast.makeText(ReceivedActivity.this, "Unable to fetch data", Toast.LENGTH_SHORT).show();
-                ArrayList<ReceivedClass> e=new ArrayList<ReceivedClass>();
-                e.add(new ReceivedClass("No Internet Connection","", "","","",""));
-                CustomAdapter4 customAdapter2=new CustomAdapter4(ReceivedActivity.this,R.layout.received_listview,e);
-                pb.setVisibility(View.GONE);
-                ls.setAdapter(customAdapter2);
-                // Handle error
-            }
-        });
-
-    }
+    Integer positio;
+    String cardno;
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.returned) {
             // Delete the item
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int position = info.position;
-            pb.setVisibility(View.VISIBLE);
-            readDataFromGoogleSheet2();
+            positio=position;
+            for(int i=0;i<sheetdata.size();i++){
+                if(sheetdata.get(i).get(0).toString().equals(sp.getString("admin_institute_code",null)) && sheetdata.get(i).get(3).toString().equals("Received") && sheetdata.get(i).get(8).toString().equals(a.get(positio).getCardNo()) && sheetdata.get(i).get(1).toString().equals(a.get(positio).getDate()) && sheetdata.get(i).get(2).toString().equals(a.get(positio).getTime())) {
+                    position2=i;
+                }
+            }
+            cardno=sheetdata.get(position2).get(8).toString();
+            readDataFromGoogleSheet6();
 
 //            Integer pos=position+1;
 //            String range="Sheet2!A"+pos.toString()+":C"+pos.toString();
@@ -347,8 +310,18 @@ public class ReceivedActivity extends AppCompatActivity {
         if(item.getItemId()==R.id.edit){
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int position = info.position;
+            for(int i=0;i<sheetdata.size();i++){
+                if(sheetdata.get(i).get(0).toString().equals(sp.getString("admin_institute_code",null)) && sheetdata.get(i).get(3).toString().equals("Received") && sheetdata.get(i).get(8).toString().equals(a.get(position).getCardNo()) && sheetdata.get(i).get(1).toString().equals(a.get(position).getDate()) && sheetdata.get(i).get(2).toString().equals(a.get(position).getTime())) {
+                    position2=i;
+                }
+            }
             pb.setVisibility(View.VISIBLE);
-            readDataFromGoogleSheet3();
+            sp.edit().putString("name", sheetdata.get(position2).get(7).toString()).apply();
+            sp.edit().putString("roomno", sheetdata.get(position2).get(6).toString()).apply();
+            sp.edit().putString("cardno", sheetdata.get(position2).get(8).toString()).apply();
+            sp.edit().putString("institute_code", sheetdata.get(position2).get(9).toString()).apply();
+            sp.edit().putString("cost", sheetdata.get(position2).get(4).toString()).apply();
+            readDataFromGoogleSheet5();
 
         }
         return super.onContextItemSelected(item);
@@ -390,6 +363,8 @@ public class ReceivedActivity extends AppCompatActivity {
                     .setValueInputOption("USER_ENTERED")
                     .execute();
             Log.d(TAG, "Edit result: " + result1);
+            a= new ArrayList<>();
+            readDataFromGoogleSheet();
             Toast.makeText(this, "Laundry Returned Successfully", Toast.LENGTH_SHORT).show();
             pb.setVisibility(View.GONE);
         } catch (IOException e) {
@@ -398,68 +373,9 @@ public class ReceivedActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    private void readDataFromGoogleSheet3() {
-        String spreadsheetId = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
-        String range = "Sheet3!A1:AAA";
-        String apiKey = "AIzaSyAtB0JJF5JEcr3gCW6W_wz2AHgtBYhGBmk";
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://sheets.googleapis.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        SheetsService sheetsService = retrofit.create(SheetsService.class);
-
-        Call<ValueRange> call = sheetsService.getValues(spreadsheetId, range, apiKey);
-        call.enqueue(new Callback<ValueRange>() {
-            @Override
-            public void onResponse(@NonNull Call<ValueRange> call, @NonNull Response<ValueRange> response) {
-                //try {
-                System.out.println(response.toString());
-                ValueRange values = response.body();
-                List<List<Object>> rows = values.getValues();
-                Integer j = 0;
-                for (int i = rows.size() - 1; i >= 0; i--) {
-                    if (rows.get(i).get(0).toString().equals(sp.getString("admin_institute_code", null)) && rows.get(i).get(3).toString().equals("Received")) {
-                        if (j == position2) {
-                            position2 = i;
-                        }
-                        j = j + 1;
-                    }
-                }
-                sp.edit().putString("name", rows.get(position2).get(7).toString()).apply();
-                sp.edit().putString("roomno", rows.get(position2).get(6).toString()).apply();
-                sp.edit().putString("cardno", rows.get(position2).get(8).toString()).apply();
-                sp.edit().putString("institute_code", rows.get(position2).get(9).toString()).apply();
-                sp.edit().putString("cost", rows.get(position2).get(4).toString()).apply();
-                readDataFromGoogleSheet5();
-
-
-
-                // Process the rows here
-                //System.out.println(rows.toString());
-                // Toast.makeText(ReceivedActivity.this, rows.get(1).get(0).toString(), Toast.LENGTH_SHORT).show();
-                //}
-//                catch (AssertionError a){
-//                    System.out.println(a.getMessage());
-//                    Toast.makeText(ReceivedActivity.this, a.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-            }
-            @Override
-            public void onFailure(@NonNull Call<ValueRange> call, @NonNull Throwable t) {
-                Toast.makeText(ReceivedActivity.this, "Unable to fetch data", Toast.LENGTH_SHORT).show();
-                ArrayList<ReceivedClass> e=new ArrayList<ReceivedClass>();
-                e.add(new ReceivedClass("No Internet Connection","", "","","",""));
-                CustomAdapter4 customAdapter2=new CustomAdapter4(ReceivedActivity.this,R.layout.received_listview,e);
-                pb.setVisibility(View.GONE);
-                ls.setAdapter(customAdapter2);
-                // Handle error
-            }
-        });
-
-    }
     private void readDataFromGoogleSheet5() {
         String spreadsheetId = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
-        String range = "Sheet1!A:J";
+        String range = "Sheet1!K:T";
         String apiKey = "AIzaSyAtB0JJF5JEcr3gCW6W_wz2AHgtBYhGBmk";
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://sheets.googleapis.com/")
@@ -536,8 +452,9 @@ public class ReceivedActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean success) {
+            a= new ArrayList<>();
+            readDataFromGoogleSheet();
             Toast.makeText(ReceivedActivity.this, "Laundry deleted Successfully", Toast.LENGTH_SHORT).show();
-
         }
     }
 
@@ -578,5 +495,93 @@ public class ReceivedActivity extends AppCompatActivity {
             pb.setVisibility(View.GONE);
             e.printStackTrace();
         }
+    }
+    //function to create dialog box with edit text in it
+    Integer otp;
+    void alertDialogDemo(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter OTP sent to your registered email id "+email.toString().substring(0,3)+"****"+email.toString().substring(email.toString().indexOf('@')-1));
+        builder.setCancelable(false);
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if(input.getText().toString().equals(otp.toString())){
+                    pb.setVisibility(View.VISIBLE);
+                    createSheetsService();
+                    ValueRange body = new ValueRange()
+                            .setValues(Arrays.asList(
+                                    Arrays.asList("Returned")
+                            ));
+                    editDataToSheet(body);
+
+                }
+                else{
+                    alertDialogDemo();
+                    Toast.makeText(ReceivedActivity.this, "Incorrect OTP", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+    private void readDataFromGoogleSheet6() {
+        String spreadsheetId = "1myN4i5Nu7oTZqm9CrOyT4O7aQjJ7f8AcucQ1-MnmU4w";
+        String range = "Sheet1!A:J";
+        String apiKey = "AIzaSyAtB0JJF5JEcr3gCW6W_wz2AHgtBYhGBmk";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://sheets.googleapis.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        SheetsService sheetsService = retrofit.create(SheetsService.class);
+
+        Call<ValueRange> call = sheetsService.getValues(spreadsheetId, range, apiKey);
+        call.enqueue(new Callback<ValueRange>() {
+            @Override
+            public void onResponse(@NonNull Call<ValueRange> call, @NonNull Response<ValueRange> response) {
+                //try {
+                System.out.println(response.toString());
+                ValueRange values = response.body();
+                List<List<Object>> rows = values.getValues();
+                //Random integer between 1000-9999
+                otp = (int)(Math.random() * (9999 - 1000 + 1) + 1000);
+                for(int i=0;i<rows.size();i++){
+                    if(rows.get(i).get(2).toString().equals(cardno) && rows.get(i).get(9).toString().equals(sp.getString("admin_institute_code",null))) {
+                        SendMail sm=new SendMail(ReceivedActivity.this,rows.get(i).get(5).toString(),"OTP for Receiving Laundry","Your OTP is:"+otp.toString());
+                        sm.execute();
+                        Toast.makeText(ReceivedActivity.this, "OTP sent successfully", Toast.LENGTH_SHORT).show();
+                        email=rows.get(i).get(5).toString();
+                        break;
+                    }
+                }
+                alertDialogDemo();
+
+
+                // Process the rows here
+                //System.out.println(rows.toString());
+                // Toast.makeText(ReceivedActivity.this, rows.get(1).get(0).toString(), Toast.LENGTH_SHORT).show();
+                //}
+//                catch (AssertionError a){
+//                    System.out.println(a.getMessage());
+//                    Toast.makeText(ReceivedActivity.this, a.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ValueRange> call, @NonNull Throwable t) {
+                Toast.makeText(ReceivedActivity.this, "Unable to send OTP", Toast.LENGTH_SHORT).show();
+                pb.setVisibility(View.GONE);
+                // Handle error
+            }
+        });
+
     }
 }
