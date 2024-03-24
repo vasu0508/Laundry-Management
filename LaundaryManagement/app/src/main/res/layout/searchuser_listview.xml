@@ -28,7 +28,7 @@
         android:textColor="@color/black"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:textSize="20sp" />
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -44,7 +44,7 @@
         android:gravity="left|center_vertical"
         android:textAlignment="gravity"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="20dp"
         tools:ignore="RtlCompat" />
 </androidx.cardview.widget.CardView>
 </LinearLayout>

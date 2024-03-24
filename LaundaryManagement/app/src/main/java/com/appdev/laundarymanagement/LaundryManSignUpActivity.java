@@ -97,6 +97,7 @@ public class LaundryManSignUpActivity extends AppCompatActivity {
                 Intent intent=new Intent(LaundryManSignUpActivity.this,LoginActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
             }
         });
     }

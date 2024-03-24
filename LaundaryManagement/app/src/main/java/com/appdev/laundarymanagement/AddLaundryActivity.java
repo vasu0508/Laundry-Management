@@ -115,6 +115,7 @@ public class AddLaundryActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                submit.setEnabled(false);
                 ArrayList<String> ab=new ArrayList();
                 totalclothes= Double.valueOf(0);
                 totalcost= Double.valueOf(0);
@@ -124,6 +125,9 @@ public class AddLaundryActivity extends AppCompatActivity {
                 ArrayList<String> arr=customAdapter2.data;
                 System.out.println(customAdapter2.data);
                 for(int i=0;i<customAdapter2.data.size();i++){
+                    if(arr.get(i).equals("")){
+                        arr.set(i,"0");
+                    }
                     Double j=Double.parseDouble(arr.get(i))*Double.parseDouble(a.get(i).getRate());
                     System.out.println(j);
                     totalcost=totalcost+j;
@@ -175,6 +179,7 @@ public class AddLaundryActivity extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(AddLaundryActivity.this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
+                    submit.setEnabled(true);
                 }
             }
         });
@@ -189,6 +194,9 @@ public class AddLaundryActivity extends AppCompatActivity {
                 ArrayList<String> arr=customAdapter2.data;
                 System.out.println(customAdapter2.data);
                 for(int i=0;i<customAdapter2.data.size();i++){
+                    if(arr.get(i).equals("")){
+                        arr.set(i,"0");
+                    }
                     Double j=Double.parseDouble(arr.get(i))*Double.parseDouble(a.get(i).getRate());
                     totalcost=totalcost+j;
                     totalclothes=totalclothes+Double.parseDouble(customAdapter2.data.get(i));

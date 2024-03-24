@@ -1,13 +1,11 @@
 package com.appdev.laundarymanagement;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,7 +16,6 @@ import android.os.StrictMode;
 import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,7 +25,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -43,7 +39,6 @@ import com.google.api.services.sheets.v4.model.DimensionRange;
 import com.google.api.services.sheets.v4.model.Request;
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -51,8 +46,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
-import kotlin.random.Random;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -211,7 +204,7 @@ public class ReceivedActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.navigation_settings:
-                Intent intent5 = new Intent(ReceivedActivity.this, Feedback.class);
+                Intent intent5 = new Intent(ReceivedActivity.this, SettingsActivity.class);
                 startActivity(intent5);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();

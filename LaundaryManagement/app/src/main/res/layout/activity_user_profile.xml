@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Keyush Shah"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textColor="@color/white"
             android:fontFamily="@font/black_ops_one"
             android:layout_toRightOf = "@id/Profile_image"
@@ -65,7 +65,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_profile_rupee_icon"></ImageView>
+                    android:src="@drawable/ic_profile_rupee_icon"/>
 
                 <TextView
                     android:id="@+id/balance_profile"
@@ -75,7 +75,7 @@
                     android:includeFontPadding="false"
                     android:text="1233"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -87,7 +87,7 @@
                     android:includeFontPadding="false"
                     android:text="Balance"
                     android:textColor="@color/white"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20dp"/>
 
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -122,7 +122,7 @@
                     android:includeFontPadding="false"
                     android:text="1256"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -134,7 +134,7 @@
                     android:includeFontPadding="false"
                     android:text="Card No"
                     android:textColor="@color/white"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20dp"/>
 
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>

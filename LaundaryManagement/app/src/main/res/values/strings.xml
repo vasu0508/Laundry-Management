@@ -51,4 +51,23 @@
     <string name="laundry_returned">Laundry Returned</string>
     <string name="edit_laundry">Edit Laundry</string>
     <string name="delete_laundry">Delete Laundry</string>
+    <string name="download">Download</string>
+    <string name="feedback">Feedback</string>
+    <string name="monthly_report">Monthly Report</string>
+    <string name="open_report">Open Report</string>
+    <string name="add_dry_cleaning">Add Dry Cleaning</string>
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
 </resources>

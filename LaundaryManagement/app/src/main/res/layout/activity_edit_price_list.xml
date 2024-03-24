@@ -18,7 +18,7 @@
         android:paddingLeft="15dp"
         android:text="@string/edit_particular"
         android:textColor="@color/black"
-        android:textSize="50sp"
+        android:textSize="50dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
             android:backgroundTint="@color/white"
             android:hint="@string/unit"
             android:inputType="text"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:text=""
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>

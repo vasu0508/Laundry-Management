@@ -24,10 +24,10 @@
             android:background="@drawable/gradient_backgound"
             android:fontFamily="sans-serif-black"
             android:paddingLeft="15dp"
-            android:text="@string/options"
+            android:text="@string/feedback"
             android:gravity="center_vertical"
             android:textColor="@color/white"
-            android:textSize="50sp"
+            android:textSize="50dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,16 +36,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/logout"
-            android:backgroundTint="@color/white"
-            android:layout_marginEnd="10dp"
-            android:id="@+id/logout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -95,6 +86,7 @@
                         android:ems="10"
                         android:gravity="start|top"
                         android:hint="@string/write_feedback"
+                        android:textSize="15dp"
                         android:inputType="textMultiLine"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
@@ -113,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/black"
                         android:text="@string/submit"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -129,20 +121,5 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10">
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_nav"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="675dp"
-            android:background="@color/white"
-            app:itemIconTint="@drawable/navbar_color_selector"
-            app:itemTextColor="@drawable/navbar_color_selector"
-            app:menu="@menu/bottom_nav_menu"
-            />
-    </RelativeLayout>
+
 </LinearLayout>

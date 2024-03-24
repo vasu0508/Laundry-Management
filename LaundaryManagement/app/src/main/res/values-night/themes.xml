@@ -21,7 +21,9 @@
             @style/ShapeAppearanceOverlay.MyApp.TextInputLayout.Rounded
         </item>
     </style>
-
+    <style name="NumberPickerTextSize">
+        <item name="android:textSize" tools:ignore="SpUsage">30dp</item>
+    </style>
     <style name="ShapeAppearanceOverlay.MyApp.TextInputLayout.Rounded" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">32dp</item>

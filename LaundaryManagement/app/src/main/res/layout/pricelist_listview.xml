@@ -18,7 +18,7 @@
         android:gravity="center_vertical"
         android:text="efefw"
         android:textColor="@color/white"
-        android:textSize="17sp"
+        android:textSize="17dp"
         android:textFontWeight="800"
         />
 
@@ -34,7 +34,7 @@
         android:gravity="left|center_vertical"
         android:textAlignment="gravity"
         android:textColor="@color/white"
-        android:textSize="17sp"
+        android:textSize="17dp"
         tools:ignore="RtlCompat"
         android:textFontWeight="800"/>
 
@@ -47,6 +47,6 @@
         android:text="eyttry"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="17sp"
+        android:textSize="17dp"
         android:textFontWeight="800"/>
 </LinearLayout>

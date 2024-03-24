@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.navigation_settings:
-                Intent intent5 = new Intent(MainActivity.this, Feedback.class);
+                Intent intent5 = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent5);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
@@ -379,6 +379,27 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
 
+        }
+        if (item.getItemId() == R.id.add_drycleaning) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            int position = info.position;
+            System.out.println(b.get(position).getCardNo());
+            for (int i = 0; i < dd.size(); i++) {
+                if (b.get(position).getCardNo().equals(dd.get(i).get(2)) && b.get(position).getInstituteCode().equals(dd.get(i).get(9))) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("name", dd.get(i).get(0).toString());
+                    editor.putString("roomno", dd.get(i).get(1).toString());
+                    editor.putString("cardno", dd.get(i).get(2).toString());
+                    editor.putString("balance", dd.get(i).get(8).toString());
+                    editor.putString("institute_code", dd.get(i).get(9).toString());
+                    editor.apply();
+                }
+            }
+
+            Intent intent = new Intent(MainActivity.this, AddDrycleaningActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            return true;
         }
         return super.onContextItemSelected(item);
     }

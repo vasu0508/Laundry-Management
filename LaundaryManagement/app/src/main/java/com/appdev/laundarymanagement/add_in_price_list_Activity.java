@@ -70,23 +70,27 @@ public class add_in_price_list_Activity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                submit.setEnabled(false);
                 pb.setVisibility(View.VISIBLE);
                 p=particular.getText().toString();
                 u=unit.getText().toString();
                 r=rate.getText().toString();
                 if(p.isEmpty()){
                     pb.setVisibility(View.INVISIBLE);
+                    submit.setEnabled(true);
                     particular.setError("This field cannot be Empty");
                 }
                 else if(u.isEmpty()){
                     pb.setVisibility(View.INVISIBLE);
                     unit.setError("This field cannot be Empty");
+                    submit.setEnabled(true);
                     particular.setError(null);
                 }
                 else if(r.isEmpty()){
                     pb.setVisibility(View.INVISIBLE);
                     rate.setError("This field cannot be Empty");
                     unit.setError(null);
+                    submit.setEnabled(true);
                     particular.setError(null);
                 }
                 else{
@@ -109,9 +113,9 @@ public class add_in_price_list_Activity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(add_in_price_list_Activity.this,PricelistActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//                Intent intent=new Intent(add_in_price_list_Activity.this,PricelistActivity.class);
+//                startActivity(intent);
+//                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
             }
         });

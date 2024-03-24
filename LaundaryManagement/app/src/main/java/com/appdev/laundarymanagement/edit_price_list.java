@@ -61,6 +61,7 @@ public class edit_price_list extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                submit.setEnabled(false);
                 pb.setVisibility(View.VISIBLE);
                 p=particular.getText().toString();
                 u=unit.getText().toString();
@@ -68,17 +69,20 @@ public class edit_price_list extends AppCompatActivity {
                 if(p.isEmpty()){
                     pb.setVisibility(View.INVISIBLE);
                     particular.setError("This field cannot be Empty");
+                    submit.setEnabled(true);
                 }
                 else if(u.isEmpty()){
                     pb.setVisibility(View.INVISIBLE);
                     unit.setError("This field cannot be Empty");
                     particular.setError(null);
+                    submit.setEnabled(true);
                 }
                 else if(r.isEmpty()){
                     pb.setVisibility(View.INVISIBLE);
                     rate.setError("This field cannot be Empty");
                     unit.setError(null);
                     particular.setError(null);
+                    submit.setEnabled(true);
                 }
                 else{
                     particular.setError(null);
@@ -100,9 +104,9 @@ public class edit_price_list extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(edit_price_list.this,PricelistActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//                Intent intent=new Intent(edit_price_list.this,PricelistActivity.class);
+//                startActivity(intent);
+//                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
             }
         });

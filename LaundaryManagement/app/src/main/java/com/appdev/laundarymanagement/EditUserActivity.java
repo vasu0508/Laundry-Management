@@ -84,27 +84,34 @@ public class EditUserActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                submit.setEnabled(false);
                 entry=true;
                 if(name.getText().toString().isEmpty()){
                     name.setError("This Field cannot be empty");
+                    submit.setEnabled(true);
                 }
                 if(email.getText().toString().isEmpty()){
                     email.setError("This Field cannot be empty");
+                    submit.setEnabled(true);
                 }
                 if(program.getText().toString().isEmpty()){
                     program.setError("This Field cannot be empty");
+                    submit.setEnabled(true);
                 }
                 if(year.getText().toString().isEmpty()){
                     year.setError("This Field cannot be empty");
+                    submit.setEnabled(true);
                 }
                 if(cardno.getText().toString().isEmpty()){
                     cardno.setError("This Field cannot be empty");
+                    submit.setEnabled(true);
                 }
                 if(roomno.getText().toString().isEmpty()){
                     roomno.setError("This Field cannot be empty");
                 }
                 if(deposit.getText().toString().isEmpty()){
                     deposit.setError("This Field cannot be empty");
+                    submit.setEnabled(true);
                 }
                 if(!roomno.getText().toString().isEmpty() && !name.getText().toString().isEmpty() && !year.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !program.getText().toString().isEmpty() && !cardno.getText().toString().isEmpty() && !deposit.getText().toString().isEmpty()){
                     nametext=name.getText().toString();

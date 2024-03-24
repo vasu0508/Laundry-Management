@@ -68,6 +68,7 @@ public class UserFeedbackActivity extends AppCompatActivity {
             public void onClick(View view) {
                 submit.setEnabled(false);
                 if(feedback.getText().toString().isEmpty()){
+                    submit.setEnabled(true);
                     feedback.setError("This field cannot be empty");
                 }
                 else{
@@ -158,8 +159,9 @@ public class UserFeedbackActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ValueRange> call, @NonNull Throwable t) {
-
+                Toast.makeText(UserFeedbackActivity.this, "Unable to send data", Toast.LENGTH_SHORT).show();
                 // Handle error
+                submit.setEnabled(true);
             }
         });
 

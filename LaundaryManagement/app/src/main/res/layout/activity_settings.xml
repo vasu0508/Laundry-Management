@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_backgound"
+    tools:context=".SettingsActivity"
+    android:weightSum="100">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        >
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_backgound"
+            android:fontFamily="sans-serif-black"
+            android:paddingLeft="15dp"
+            android:text="@string/title_settings"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/logout"
+            android:backgroundTint="@color/white"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:layout_weight="80">
+    <Button
+        android:id="@+id/feedback"
+        android:layout_width="294dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/white_background"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/white"
+        android:textSize="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/feedback" />
+    <Button
+        android:id="@+id/monthlyreport"
+        android:layout_width="294dp"
+        android:background="@drawable/white_background"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/white"
+        android:layout_height="96dp"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/monthly_report" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Made by: Vasu Choudhary and Keyush Shah"
+            android:background="@color/black"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="675dp"
+            android:background="@color/white"
+            app:itemIconTint="@drawable/navbar_color_selector"
+            app:itemTextColor="@drawable/navbar_color_selector"
+            app:menu="@menu/bottom_nav_menu"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

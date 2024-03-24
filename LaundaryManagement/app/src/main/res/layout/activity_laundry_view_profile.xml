@@ -61,7 +61,7 @@
                     android:layout_marginTop="111dp"
                     android:text="Keyush Shah"
                     android:textColor="#ffffff"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -165,7 +165,7 @@
                 android:gravity="center"
                 android:text="Amount Remaining"
                 android:textColor="@color/white"
-                android:textSize="27sp"
+                android:textSize="27dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

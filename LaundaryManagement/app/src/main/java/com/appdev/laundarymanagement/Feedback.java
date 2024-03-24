@@ -38,12 +38,10 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Feedback extends AppCompatActivity {
-    BottomNavigationView bv;
     EditText feedback;
     Button submit;
     String email="shah.keyush2002@gmail.com";
     String institutecode="1";
-    ImageButton logout;
     SharedPreferences sp;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -52,29 +50,17 @@ public class Feedback extends AppCompatActivity {
         setContentView(R.layout.activity_feedback);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        bv=findViewById(R.id.bottom_nav);
-        logout=findViewById(R.id.logout);
         feedback=findViewById(R.id.editTextTextMultiLine);
         submit=findViewById(R.id.button2);
         sp=getSharedPreferences(getResources().getString(R.string.sharedpref),MODE_PRIVATE);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sp.edit().putString("admin_islogin","false").apply();
-                sp.edit().clear();
-                Intent intent =new Intent(Feedback.this,LauncherActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
-
-            }
-        });
+        institutecode=sp.getString("admin_institute_code",null);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 submit.setEnabled(false);
                 if(feedback.getText().toString().isEmpty()){
                     feedback.setError("This field cannot be empty");
+                    submit.setEnabled(true);
                 }
                 else{
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -93,45 +79,7 @@ public class Feedback extends AppCompatActivity {
                 }
             }
         });
-        bv.getMenu().findItem(R.id.navigation_settings).setChecked(true);
-        bv.setOnNavigationItemSelectedListener(item -> {
-            myClickItem(item);
-            return true;
-        });
-    }
-    public void myClickItem(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.navigation_dashboard:
-                Intent intent = new Intent(Feedback.this, MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
-                break;
-            case R.id.navigation_pricelist:
-                Intent intent2 = new Intent(Feedback.this, PricelistActivity.class);
-                startActivity(intent2);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
-                break;
-            case R.id.navigation_searchuser:
-                Intent intent3 = new Intent(Feedback.this, SearchUserActivity.class);
-                startActivity(intent3);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
-                break;
-            case R.id.navigation_received:
-                Intent intent4 = new Intent(Feedback.this, ReceivedActivity.class);
-                startActivity(intent4);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
-                break;
-            case R.id.navigation_settings:
-                Intent intent5 = new Intent(Feedback.this, Feedback.class);
-                startActivity(intent5);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
-                break;
-        }
+
     }
     private Sheets sheetsService;
 

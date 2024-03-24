@@ -147,7 +147,7 @@ public class PricelistActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.navigation_settings:
-                Intent intent5 = new Intent(PricelistActivity.this, Feedback.class);
+                Intent intent5 = new Intent(PricelistActivity.this, SettingsActivity.class);
                 startActivity(intent5);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();

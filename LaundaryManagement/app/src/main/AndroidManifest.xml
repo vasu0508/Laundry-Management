@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -20,16 +21,39 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
+            android:name=".AddDrycleaningActivity"
+            android:exported="false" />
+
+        <provider
+            android:name=".CsvContentProvider"
+            android:authorities="com.appdev.laundarymanagement.provider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
+
+        <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
+            android:name=".MonthlyReportActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserFeedbackActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".LaundryViewProfile"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -38,6 +62,7 @@
         </activity>
         <activity
             android:name=".History_bif_Activity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -46,6 +71,7 @@
         </activity>
         <activity
             android:name=".user_history"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -54,6 +80,7 @@
         </activity>
         <activity
             android:name=".User_Login"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -99,6 +126,7 @@
         <!-- </activity> -->
         <activity
             android:name=".LaundryManSignUpActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -107,6 +135,7 @@
         </activity>
         <activity
             android:name=".user_PricelistActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
@@ -131,6 +160,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
